@@ -1,0 +1,171 @@
+<div class="mat-elevation-z8 mx-3">
+  <mat-dialog-content class="dialog">
+    <div class="p-2">
+      <p class="title mx-3 my-4 fs-3 bg-white text-success ">Informações Pessoais</p>
+      <form [formGroup]="formGroup" (change)="onChangesFormGroup()">
+        <div class="mx-1 my-3 pt-3">
+          <div class="m-0 p-0 border rounded row">
+            <p class="title ms-3 px-2 fs-5 bg-white text-dark">Aluno</p>
+            <div class="row g-3 p-0 m-0">
+              <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                <div class="form-floating">
+                  <input type="text"
+                         class="form-control"
+                         min="1"
+                         max="30"
+                         id="nomeInput"
+                         formControlName="nomeAluno"
+                         required />
+                  <label for="nomeInput">Nome</label>
+                </div>
+              </div>
+              <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    min="1"
+                    max="30"
+                    id="cpfInput"
+                    formControlName="cpfAluno"
+                    required />
+                  <label for="cpfInput">CPF</label>
+                </div>
+              </div>
+              <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    min="1"
+                    max="30"
+                    id="nascimentoInput"
+                    formControlName="nascAluno"
+                    required />
+                  <label for="nascimentoInput">Data de Nascimento</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mx-1 my-3 pt-3">
+            <div class="m-0 p-0 border rounded row">
+              <p class="title ms-3 px-2 fs-5 bg-white text-dark">1º Responsável</p>
+              <div class="row g-3 p-0 m-0">
+                <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="nomeResponsavelInput"
+                      formControlName="nomeResponsavel"
+                      required />
+                    <label for="nomeResponsavelInput">Nome</label>
+                  </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="telefoneInput"
+                      formControlName="telefoneResponsavel"
+                      required />
+                    <label for="telefoneInput">Telefone</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row g-3 p-0 m-0">
+                <div class="col-12 col-sm-12 col-lg-12 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="emailInput"
+                      formControlName="emailResponsavel"
+                      required
+                    />
+                    <label for="emailInput">E-mail</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="button" class="btn btn-sm btn-outline-primary mx-2"
+                    title="Adicionar Responsável"
+                    (click)="addSegResponsavel()" *ngIf="isButton">
+              <i class="bi bi-plus-circle me-2"></i>Adicionar</button>
+          </div>
+
+          <div class="mx-1 my-3 pt-3" *ngIf="isChecked">
+            <div class="m-0 p-0 border rounded row">
+              <p class="title ms-3 px-2 fs-5 bg-white text-dark">2º Responsável</p>
+              <div class="row g-3 p-0 m-0">
+                <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="nome2ResponsavelInput"
+                      formControlName="nomeSegResponsavel"
+                      required />
+                    <label for="nome2ResponsavelInput">Nome</label>
+                  </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="telefone2Input"
+                      formControlName="telefoneSegResponsavel"
+                      required />
+                    <label for="telefone2Input">Telefone</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 p-0 m-0">
+                <div class="col-12 col-sm-12 col-lg-12 m-0 mb-3">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      min="1"
+                      max="30"
+                      id="email2Input"
+                      formControlName="emailSegResponsavel"
+                      required
+                    />
+                    <label for="email2Input">E-mail</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center pt-3">
+              <button type="button" class="btn btn-sm btn-outline-danger mx-2"
+                      title="Adicionar Responsável"
+                      (click)="removeSegResponsavel()">
+                <i class="bi bi-x-circle me-2"></i>Remover</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+</div>

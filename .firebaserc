@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "escola-b1c23": {
+      "hosting": {
+        "Escola": [
+          "escola-b1c23"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "escola-b1c23"
+  }
+}

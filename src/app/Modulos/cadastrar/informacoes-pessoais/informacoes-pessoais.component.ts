@@ -1,0 +1,63 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {InformacaoPessoal} from "../../../Pagina/interface/informacao-pessoal";
+import {Alunos} from "../../../Pagina/interface/aluno";
+
+@Component({
+  selector: 'informacoes-pessoais',
+  templateUrl: './informacoes-pessoais.component.html',
+  styleUrls: ['./informacoes-pessoais.component.css']
+})
+export class InformacoesPessoaisComponent implements OnInit {
+  @Input() informacoesPessoais: InformacaoPessoal| undefined;
+  @Output() onChangeValues: EventEmitter<Alunos> = new EventEmitter<Alunos>();
+  public formGroup: FormGroup;
+  public isChecked: boolean = false;
+  public isButton: boolean = true;
+
+
+  constructor(
+    public formBuilder: FormBuilder,
+  ) {
+    this.formGroup = this.formBuilder.group({
+      nomeAluno:['',[Validators.required]],
+      cpfAluno:['',[Validators.required]],
+      nascAluno:['',[Validators.required]],
+      nomeResponsavel:['',[Validators.required]],
+      telefoneResponsavel:['',[Validators.required]],
+      emailResponsavel:['',[Validators.required]],
+
+    })
+  }
+
+  ngOnInit(): void {
+  }
+
+  public addSegResponsavel(): void{
+    this.isChecked = true;
+    this.isButton = false;
+    this.formGroup.addControl(
+      "nomeSegResponsavel",new FormControl('',[Validators.required]),
+    )
+    this.formGroup.addControl(
+      "telefoneSegResponsavel",new FormControl('',[Validators.required]),
+    )
+    this.formGroup.addControl(
+      "emailSegResponsavel", new FormControl('',[Validators.required]),)
+  }
+
+  public removeSegResponsavel(): void{
+    this.isChecked = false;
+    this.isButton = true;
+    this.formGroup.removeControl("nomeSegResponsavel");
+    this.formGroup.removeControl("telefoneSegResponsavel");
+    this.formGroup.removeControl("emailSegResponsavel");
+  }
+
+  public onChangesFormGroup(): void{
+    this.onChangeValues.emit(this.formGroup.value)
+  }
+
+
+
+}

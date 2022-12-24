@@ -90,12 +90,30 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Escola:build:production",
+            "firebaseProject": "escola-b1c23",
+            "firebaseHostingSite": "escola-b1c23"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "99e7942c-ec84-49e9-82cb-8cda82894a0f"
   }
 }
