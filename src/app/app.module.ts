@@ -22,8 +22,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import {InserirComponent} from "./Modulos/inserir/inserir.component";
 import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {FooterComponent} from "./Pagina/footer/footer.component";
-import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
-
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
 
 @NgModule({
     declarations: [
@@ -50,7 +49,8 @@ import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
     provideMessaging(() => getMessaging()),
     AppRoutingModule,
     RouterOutlet,
-    NgxMaskDirective, NgxMaskPipe
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,
