@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Service} from "../../Service/service.component";
-import {InformacaoPessoal} from "../../Pagina/interface/informacao-pessoal";
-import {Alunos} from "../../Pagina/interface/aluno";
-
+import {AlunosModel} from "../../Pagina/interface/alunos";
+import {EnderecoModel} from "../../Pagina/interface/endereco";
+import {InformacoesModel} from "../../Pagina/interface/informacoes";
 
 @Component({
   selector: 'app-cadastrar',
@@ -11,25 +11,32 @@ import {Alunos} from "../../Pagina/interface/aluno";
   styleUrls: ['./cadastrar.component.css']
 })
 export class CadastrarComponent implements OnInit {
-  public formGroup: FormGroup | undefined ;
+  public formGroup: FormGroup;
   public loading : boolean = false;
-  public informacoes: InformacaoPessoal| undefined;
   public cadastro : boolean = false;
-
+  public aluno: AlunosModel;
+  public endereco: EnderecoModel;
+  public informacao: InformacoesModel;
 
   constructor(
     private armazem: Service,
+    public formBuilder: FormBuilder,
   ) {
-
+    this.formGroup = this.formBuilder.group({
+      nome:['',[Validators.required]],
+      CPF:['',[Validators.required]],
+      nascAluno:['',[Validators.required]],
+    })
   }
 
   ngOnInit(): void {
+
   }
 
-  public onFormGroup(form: Alunos): void{
-    console.log(form);
+  public onFormGroup(formOne: InformacoesModel): void{
+    this.informacao = formOne;
     this.loading = true;
-    this.armazem.cadastrar(form).then(()=>{
+    this.armazem.createInformacoes(formOne).then(()=>{
       this.loading = false;
       this.formGroup?.reset();
     },error =>{
@@ -37,5 +44,38 @@ export class CadastrarComponent implements OnInit {
     })
   }
 
+  public onFormGroups(formTwo: EnderecoModel) {
+    this.endereco = formTwo;
+    this.loading = true;
+    this.armazem.createEndereço(formTwo).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
+  }
 
+  public cadastroAluno(): void {
+    this.aluno = this.valueForm();
+    this.loading = true;
+    this.armazem.createCadastro(this.aluno).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
+  }
+
+  public valueForm(): any{
+    const aluno = this.formGroup.value as AlunosModel;
+    aluno.CPF = this.formGroup.get('CPF')?.value;
+    aluno.nome = this.formGroup.get('nome')?.value;
+    aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
+    return aluno
+  }
+
+  cadastrar() {
+    this.loading = true;
+
+  }
 }

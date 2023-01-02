@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {InformacaoPessoal} from "../../../Pagina/interface/informacao-pessoal";
-import {Alunos} from "../../../Pagina/interface/aluno";
+import {AlunosModel} from "../../../Pagina/interface/alunos";
+import {Service} from "../../../Service/service.component";
+import {EnderecoModel} from "../../../Pagina/interface/endereco";
+import {InformacoesModel} from "../../../Pagina/interface/informacoes";
 
 @Component({
   selector: 'informacoes-pessoais',
@@ -9,24 +11,20 @@ import {Alunos} from "../../../Pagina/interface/aluno";
   styleUrls: ['./informacoes-pessoais.component.css']
 })
 export class InformacoesPessoaisComponent implements OnInit {
-  @Input() informacoesPessoais: InformacaoPessoal| undefined;
-  @Output() onChangeValues: EventEmitter<Alunos> = new EventEmitter<Alunos>();
+  @Output() onChangeValues: EventEmitter<InformacoesModel> = new EventEmitter<InformacoesModel>();
+  @Input() aluno: AlunosModel;
   public formGroup: FormGroup;
   public isChecked: boolean = false;
   public isButton: boolean = true;
 
-
   constructor(
     public formBuilder: FormBuilder,
+    public armazem: Service,
   ) {
     this.formGroup = this.formBuilder.group({
-      nomeAluno:['',[Validators.required]],
-      cpfAluno:['',[Validators.required]],
-      nascAluno:['',[Validators.required]],
       nomeResponsavel:['',[Validators.required]],
       telefoneResponsavel:['',[Validators.required]],
       emailResponsavel:['',[Validators.required]],
-
     })
   }
 
@@ -55,9 +53,13 @@ export class InformacoesPessoaisComponent implements OnInit {
   }
 
   public onChangesFormGroup(): void{
-    this.onChangeValues.emit(this.formGroup.value)
+    const informacoes = this.formGroup.value as InformacoesModel;
+    informacoes.idAluno = this.aluno.id;
+    informacoes.nomeResponsavel = this.formGroup.get('nomeResponsavel')?.value;
+    informacoes.telefoneResponsavel = this.formGroup.get('telefoneResponsavel')?.value;
+    informacoes.emailResponsavel = this.formGroup.get('emailResponsavel')?.value;
+    this.onChangeValues.emit(informacoes)
   }
-
 
 
 }

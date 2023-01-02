@@ -1,8 +1,18 @@
 <div>
-  <div class="menu">
-    <button class="btn btn-sm col-12" (click)="navigateTo('Cadastrar')">Cadastrar</button>
-    <button  class="btn btn-sm p-2 col-12" (click)="navigateTo('Consultar')">Consultar</button>
-    <button class="btn btn-sm p-2 col-12" (click)="navigateTo('Inserir')">Inserir</button>
-    <button  class="btn btn-sm p-2 col-12" (click)="navigateTo('Desempenho')">Desempenho</button>
+  <div class="menu col-lg-12">
+<ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm">
+  <li class="nav-item">
+    <button class="nav-link rounded-5 text-white" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" (click)="navigateTo('Cadastrar')">Cadastrar</button>
+  </li>
+  <li class="nav-item">
+    <button  class="nav-link rounded-5 text-white" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" (click)="navigateTo('Consultar')">Consultar</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link rounded-5 text-white" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" (click)="navigateTo('Inserir')">Inserir</button>
+  </li>
+  <li class="nav-item" >
+    <button class="nav-link rounded-5 text-white" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" (click)="navigateTo('Desempenho')">Desempenho</button>
+  </li>
+</ul>
   </div>
 </div>

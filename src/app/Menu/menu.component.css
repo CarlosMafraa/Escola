@@ -1,3 +1,6 @@
-.row{
-  background: hotpink;
+
+.nav-link:hover, .nav-link:active{
+  color: #135cb6 !important;
+  background-color: white;
 }
+

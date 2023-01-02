@@ -1,9 +1,68 @@
-<informacoes-pessoais
-  [informacoesPessoais] = "informacoes"
-  (onChangeValues)="onFormGroup($event)" ></informacoes-pessoais>
-<endereco></endereco>
-<div class="text-center">
-  <button type="submit" class="btn btn-dark">Cadastrar</button>
+<div class="mat-elevation-z8 mx-3">
+  <mat-dialog-content class="dialog">
+    <div class="p-2">
+      <form [formGroup]="formGroup" (submit)="cadastroAluno()">
+        <p class="title mx-3 mt-2 fs-5 bg-white text-success ">Informações</p>
+        <div class="mx-1 my-3 pt-3">
+          <div class="m-0 p-0 border rounded row">
+            <p class="title ms-3 px-2 fs-5 bg-white text-dark">Aluno</p>
+            <div class="row g-3 p-0 m-0">
+              <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+                <div class="form-floating">
+                  <input type="text"
+                         class="form-control"
+                         min="1"
+                         max="30"
+                         id="nomeInput"
+                         formControlName="nome"
+                         required />
+                  <label for="nomeInput">Nome</label>
+                </div>
+              </div>
+              <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    min="1"
+                    max="30"
+                    id="cpfInput"
+                    formControlName="CPF"
+                    mask = "000.000.000-00"
+                    required />
+                  <label for="cpfInput">CPF</label>
+                </div>
+              </div>
+              <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    min="1"
+                    max="30"
+                    id="nascimentoInput"
+                    formControlName="nascAluno"
+                    mask="00/00/0000"
+                    required />
+                  <label for="nascimentoInput">Data de Nascimento</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
 </div>
 
-
+  <informacoes-pessoais
+    (onChangeValues)="onFormGroup($event)"
+    [aluno]="aluno"
+  ></informacoes-pessoais>
+  <endereco
+    (onChangeValues)="onFormGroups($event)"
+    [aluno]="aluno"
+  ></endereco>
+  <div class="text-center">
+    <button type="button" class="btn btn-dark" (click)="cadastrar()">Cadastrar</button>
+  </div>

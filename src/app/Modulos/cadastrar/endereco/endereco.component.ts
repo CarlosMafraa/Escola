@@ -1,32 +1,37 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WebServiceService} from "../../../Service/api/web-service.service";
+import {AlunosModel} from "../../../Pagina/interface/alunos";
+import {EnderecoModel} from "../../../Pagina/interface/endereco";
+import {Service} from "../../../Service/service.component";
 
 @Component({
   selector: 'endereco',
   templateUrl: './endereco.component.html',
-  styleUrls: ['./endereco.component.css']
+  styleUrls: ['./endereco.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EnderecoComponent implements OnInit {
-  @Output() onChangesValues: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Input() aluno: AlunosModel;
+  @Output() onChangeValues: EventEmitter<EnderecoModel> = new EventEmitter<EnderecoModel>();
   public formGroup: FormGroup;
   public cep: string = '';
-  public endereco: string = '';
+  public logradouro: string = '';
   public numero: string = '';
   public cidade: string = '';
   public bairro: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
+    private armazem: Service,
     private web: WebServiceService,
   ) {
     this.formGroup = this.formBuilder.group({
-      endereco: ['', [Validators.required]],
+      logradouro: ['', [Validators.required]],
       numero: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
       cidade: ['', [Validators.required]],
       bairro: ['', [Validators.required]],
       cep: ['', [Validators.required, Validators.maxLength(8)]],
-
     })
   }
 
@@ -37,8 +42,20 @@ export class EnderecoComponent implements OnInit {
     this.cep = this.formGroup.get('cep')?.value;
     this.web.buscarCep(this.cep).then((res) =>{
       this.bairro = res.data.bairro;
-      this.endereco = res.data.endereco;
-      this.cidade = res.data.cidade;
+      this.logradouro = res.data.logradouro;
+      this.cidade = res.data.localidade;
     })
   }
+
+  public onChangesFormGroup(): void{
+    const endereco = this.formGroup.value as EnderecoModel;
+    endereco.idAluno = this.aluno.id;
+    endereco.cep = this.formGroup.get('cep')?.value;
+    endereco.logradouro = this.formGroup.get('logradouro')?.value;
+    endereco.numero = this.formGroup.get('numero')?.value;
+    endereco.bairro = this.formGroup.get('bairro')?.value;
+    endereco.cidade = this.formGroup.get('cidade')?.value;
+    this.onChangeValues.emit(endereco)
+  }
+
 }

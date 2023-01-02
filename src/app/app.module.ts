@@ -23,6 +23,7 @@ import {InserirComponent} from "./Modulos/inserir/inserir.component";
 import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {FooterComponent} from "./Pagina/footer/footer.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask
     ScreenTrackingService,UserTrackingService,
     {provide: FIREBASE_OPTIONS, useValue: environment.firebase},
     provideNgxMask(),
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
   ],
   bootstrap: [AppComponent]
 })

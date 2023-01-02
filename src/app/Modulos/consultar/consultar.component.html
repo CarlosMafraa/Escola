@@ -1,1 +1,28 @@
+<div class="border p-0 m-0">
+  <div class=" px-2 py-2 d-flex align-items-center border">
+    <i class="bi bi-box-seam mx-2"></i>
+    <h4 class="modal-title py-1 m-0">Listagem de Alunos</h4>
+  </div>
+  <table class="table text-center">
+    <thead>
+    <tr>
+      <th scope="col" class="py-3">CPF</th>
+      <th scope="col" class="py-3">Nome</th>
+      <th scope="col" class="py-3">Data de Nascimento</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let aluno of alunos">
+      <td class="py-3">{{aluno.CPF}}</td>
+      <td class="py-3">{{ aluno.nome}}</td>
+      <td class="py-3">{{ aluno.nascAluno}}</td>
+      <td>
+        <button mat-button (click)="editarAlunos(aluno)"><i  class="bi bi-pencil-square fs-5" title="Editar"></i></button>
+<!--        <button mat-button (click)="deletar()" ><i class="bi bi-trash3 fs-5" title="Excluir"></i></button>-->
+      </td>
+    </tr>
+    </tbody>
 
+  </table>
+
+</div>
