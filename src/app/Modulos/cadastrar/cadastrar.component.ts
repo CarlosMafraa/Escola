@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
@@ -30,40 +30,11 @@ export class CadastrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
-  public onFormGroup(formOne: InformacoesModel): void{
-    this.informacao = formOne;
-    this.loading = true;
-    this.armazem.createInformacoes(formOne).then(()=>{
-      this.loading = false;
-      this.formGroup?.reset();
-    },error =>{
-      this.loading = false;
-    })
-  }
-
-  public onFormGroups(formTwo: EnderecoModel) {
-    this.endereco = formTwo;
-    this.loading = true;
-    this.armazem.createEndereço(formTwo).then(()=>{
-      this.loading = false;
-      this.formGroup?.reset();
-    },error =>{
-      this.loading = false;
-    })
-  }
-
-  public cadastroAluno(): void {
+  public cadastroAluno() {
     this.aluno = this.valueForm();
-    this.loading = true;
-    this.armazem.createCadastro(this.aluno).then(()=>{
-      this.loading = false;
-      this.formGroup?.reset();
-    },error =>{
-      this.loading = false;
-    })
+    return this.aluno
   }
 
   public valueForm(): any{
@@ -74,8 +45,35 @@ export class CadastrarComponent implements OnInit {
     return aluno
   }
 
-  cadastrar() {
-    this.loading = true;
+  public onFormGroup(formOne: InformacoesModel): void{
+    this.informacao = formOne;
+  }
 
+  public onFormGroups(formTwo: EnderecoModel) {
+    this.endereco = formTwo;
+  }
+
+  public cadastrar(): void  {
+    this.loading = true;
+    this.armazem.createCadastro(this.aluno).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
+    this.informacao.idAluno = this.aluno.id;
+    this.armazem.createInformacoes(this.informacao).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
+    this.endereco.idAluno = this.aluno.id;
+    this.armazem.createEndereço(this.endereco).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
   }
 }

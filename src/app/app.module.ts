@@ -7,7 +7,7 @@ import {InformacoesPessoaisComponent} from "./Modulos/cadastrar/informacoes-pess
 import {EnderecoComponent} from "./Modulos/cadastrar/endereco/endereco.component";
 import {MenuComponent} from "./Menu/menu.component";
 import {MatDialogModule} from "@angular/material/dialog";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
@@ -37,22 +37,23 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
         MenuComponent,
         FooterComponent
     ],
-  imports: [
-    BrowserModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions()),
-    provideMessaging(() => getMessaging()),
-    AppRoutingModule,
-    RouterOutlet,
-    NgxMaskDirective,
-    NgxMaskPipe,
-  ],
+    imports: [
+        BrowserModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAnalytics(() => getAnalytics()),
+        provideAuth(() => getAuth()),
+        provideDatabase(() => getDatabase()),
+        provideFirestore(() => getFirestore()),
+        provideFunctions(() => getFunctions()),
+        provideMessaging(() => getMessaging()),
+        AppRoutingModule,
+        RouterOutlet,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        FormsModule,
+    ],
   providers: [
     ScreenTrackingService,UserTrackingService,
     {provide: FIREBASE_OPTIONS, useValue: environment.firebase},

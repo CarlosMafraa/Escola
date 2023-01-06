@@ -9,6 +9,7 @@ import {
 import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
 import {InformacoesModel} from "../Pagina/interface/informacoes";
+import {MateriasModel, NotasModel} from "../Pagina/interface/materias";
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,7 @@ export class Service{
     informacoes.id = this.createIdInformacoes();
     const batch = this.firestore.firestore.batch();
     const ref = this.getInformacoes(informacoes.idAluno).doc(informacoes.id).ref
-    return this.getInformacoes(informacoes.id).ref.where('nomeResponsavel','==',informacoes.nomeResponsavel).get().then((Doc)=>{
+    return this.getInformacoes(informacoes.idAluno).ref.where('nomeResponsavel','==',informacoes.nomeResponsavel).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
       }
@@ -107,8 +108,29 @@ export class Service{
     return this.getAluno(idAluno).collection('Endereço');
   }
 
+  createIdNota(): string{
+    return this.firestore.collection('Nota').doc().ref.id;
+  }
 
+  createNota(nota: NotasModel): Promise<void>{
+    nota.id = this.createIdNota();
+    const batch = this.firestore.firestore.batch();
+    const ref = this.getNota(nota.idAluno).doc(nota.id).ref
+    return this.getNota(nota.idAluno).ref.where('idAluno','==',nota.idAluno).get().then((Doc)=>{
+      if(!Doc.empty){
+        throw new Error();
+      }
+      batch.set(ref,nota)
+      return batch.commit();
+    })
+  }
 
+  getNota(idAluno: string): AngularFirestoreCollection<NotasModel>{
+    return this.getAluno(idAluno).collection('Nota');
+  }
+  getAllNotas(): AngularFirestoreCollection<NotasModel>{
+    return this.firestore.collection('Notas');
+  }
 
 
 

@@ -17,8 +17,9 @@
       <td class="py-3">{{ aluno.nome}}</td>
       <td class="py-3">{{ aluno.nascAluno}}</td>
       <td>
-        <button mat-button (click)="editarAlunos(aluno)"><i  class="bi bi-pencil-square fs-5" title="Editar"></i></button>
-<!--        <button mat-button (click)="deletar()" ><i class="bi bi-trash3 fs-5" title="Excluir"></i></button>-->
+        <i type="button" (click)="editarAlunos(aluno)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
+        <i type="button" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
+        <i type="button" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
       </td>
     </tr>
     </tbody>
