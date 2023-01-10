@@ -1,5 +1,11 @@
 
-<p>Nome do aluno</p>
+<thead>
+<tr>
+  <th scope="col" class="py-3">Nome</th>
+</tr>
+<tr *ngFor="let aluno of alunos">
+  <td class="py-3">{{aluno.CPF}}</td>
+</tr>
 
 <form [formGroup]="formGroup">
 <div class="mx-3 my-3">
@@ -10,7 +16,7 @@
         <div class="d-flex my-3">
           <div class="rounded bg-primary d-flex me-1 p-1">
             <input type="text" class="form-control" placeholder="1º Nota" formControlName="nota1" mask="000">
-            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2"></i>
+            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2" (click)="cadastrarNota1()"></i>
           </div>
           <div>
             <input type="text" class="form-control" disabled>
@@ -19,7 +25,7 @@
         <div class="d-flex my-3">
           <div class="rounded bg-primary d-flex me-2 p-1">
             <input type="text" class="form-control" placeholder="2º Nota" formControlName="nota2" mask="000">
-            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2"></i>
+            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2" (click)="cadastrarNota2()"></i>
           </div>
           <div>
             <input type="text" class="form-control" disabled>
@@ -28,7 +34,7 @@
         <div class="d-flex my-3">
           <div class="rounded bg-primary d-flex me-2 p-1">
             <input type="text" class="form-control" placeholder="3º Nota" formControlName="nota3" mask="000">
-            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2" ></i>
+            <i class="bi bi-arrow-up-circle btn btn-primary rounded-circle p-2" (click)="cadastrarNota3()"></i>
           </div>
           <div>
             <input type="text" class="form-control" disabled>

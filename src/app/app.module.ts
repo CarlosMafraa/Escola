@@ -24,36 +24,39 @@ import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {FooterComponent} from "./Pagina/footer/footer.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
 import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        CadastrarComponent,
-        InformacoesPessoaisComponent,
-        EnderecoComponent,
-        InserirComponent,
-        ConsultarComponent,
-        MenuComponent,
-        FooterComponent
-    ],
-    imports: [
-        BrowserModule,
-        MatDialogModule,
-        ReactiveFormsModule,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideAnalytics(() => getAnalytics()),
-        provideAuth(() => getAuth()),
-        provideDatabase(() => getDatabase()),
-        provideFirestore(() => getFirestore()),
-        provideFunctions(() => getFunctions()),
-        provideMessaging(() => getMessaging()),
-        AppRoutingModule,
-        RouterOutlet,
-        NgxMaskDirective,
-        NgxMaskPipe,
-        FormsModule,
-    ],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    CadastrarComponent,
+    InformacoesPessoaisComponent,
+    EnderecoComponent,
+    InserirComponent,
+    ConsultarComponent,
+    MenuComponent,
+    FooterComponent
+  ],
+  imports: [
+    FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAnalytics(() => getAnalytics()),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    provideFunctions(() => getFunctions()),
+    provideMessaging(() => getMessaging()),
+    AppRoutingModule,
+    RouterOutlet,
+    NgxMaskDirective,
+    NgxMaskPipe,
+    FormsModule,
+  ],
   providers: [
     ScreenTrackingService,UserTrackingService,
     {provide: FIREBASE_OPTIONS, useValue: environment.firebase},

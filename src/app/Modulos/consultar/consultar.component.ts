@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -14,6 +15,7 @@ export class ConsultarComponent implements OnInit {
 
   constructor(
     private armazem: Service,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -33,8 +35,9 @@ export class ConsultarComponent implements OnInit {
     });
   }
 
-  public editarAlunos(alunos: AlunosModel): void{
-    this.armazem.adicionar(alunos);
+  public navigateTo(url:string): void {
+    this.router.navigate([url]);
   }
+
 
 }

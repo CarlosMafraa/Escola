@@ -5,7 +5,7 @@
         <div class="mx-2 my-2 border rounded row">
           <p class="title ms-3 px-2 fs-5 bg-white text-dark">Endereço</p>
           <div class="row g-3 p-0 m-0">
-            <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
+            <div class="col-10 col-sm-5 col-lg-5 m-0 mb-3">
               <div class="form-floating">
                 <input type="text"
                        class="form-control"
@@ -18,10 +18,11 @@
                        required />
                 <label for="cepInput">CEP</label>
               </div>
-              <button type="button" class="mt-3" (click)="consultarCEP()">
+            </div>
+            <div class="col-2 col-sm-1 col-lg-1 my-2">
+              <button type="button" class="btn btn-outline-secondary my-auto" (click)="consultarCEP()">
                 <i class="bi bi-search"></i>
               </button>
-
             </div>
             <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
               <div class="form-floating">

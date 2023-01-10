@@ -4,6 +4,7 @@ import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {EnderecoModel} from "../../Pagina/interface/endereco";
 import {InformacoesModel} from "../../Pagina/interface/informacoes";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-cadastrar',
@@ -17,24 +18,41 @@ export class CadastrarComponent implements OnInit {
   public aluno: AlunosModel;
   public endereco: EnderecoModel;
   public informacao: InformacoesModel;
+  public id: string | null;
 
   constructor(
     private armazem: Service,
     public formBuilder: FormBuilder,
+    public aRouter: ActivatedRoute,
   ) {
     this.formGroup = this.formBuilder.group({
       nome:['',[Validators.required]],
       CPF:['',[Validators.required]],
       nascAluno:['',[Validators.required]],
     })
+    this.id = this.aRouter.snapshot.paramMap.get('id');
+    console.log(this.id)
+
   }
 
   ngOnInit(): void {
   }
 
-  public cadastroAluno() {
-    this.aluno = this.valueForm();
-    return this.aluno
+  public cadastroAluno(): any  {
+  //   if(this.formGroup.invalid){
+  //     return;
+  //   }
+  //   if(this.id === null){
+      this.aluno = this.valueForm();
+      return this.aluno;
+  //     this.cadastrar();
+  //   }
+  //   this.editarAluno(this.id);
+  //
+  // }
+  //
+  // public cadastrar(): void{
+  //   this.setAluno();
   }
 
   public valueForm(): any{
@@ -76,4 +94,15 @@ export class CadastrarComponent implements OnInit {
       this.loading = false;
     })
   }
+
+  // public editarAluno(id: string): void{
+  //   const aluno = this.formGroup.value as AlunosModel;
+  //   aluno.CPF = this.formGroup.get('CPF')?.value;
+  //   aluno.nome = this.formGroup.get('nome')?.value;
+  //   aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
+  //
+  //   this.armazem.getEditar()
+  //
+  // }
+
 }
