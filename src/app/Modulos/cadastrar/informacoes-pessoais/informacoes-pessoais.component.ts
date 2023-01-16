@@ -2,13 +2,12 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../../Pagina/interface/alunos";
 import {Service} from "../../../Service/service.component";
-import {EnderecoModel} from "../../../Pagina/interface/endereco";
 import {InformacoesModel} from "../../../Pagina/interface/informacoes";
 
 @Component({
   selector: 'informacoes-pessoais',
   templateUrl: './informacoes-pessoais.component.html',
-  styleUrls: ['./informacoes-pessoais.component.css']
+  styleUrls: ['./informacoes-pessoais.component.css'],
 })
 export class InformacoesPessoaisComponent implements OnInit {
   @Output() onChangeValues: EventEmitter<InformacoesModel> = new EventEmitter<InformacoesModel>();
@@ -60,6 +59,5 @@ export class InformacoesPessoaisComponent implements OnInit {
     informacoes.emailResponsavel = this.formGroup.get('emailResponsavel')?.value;
     this.onChangeValues.emit(informacoes)
   }
-
 
 }

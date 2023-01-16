@@ -1,15 +1,10 @@
-import {inject, Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument,
-  CollectionReference
-} from "@angular/fire/compat/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference } from "@angular/fire/compat/firestore";
 import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
 import {InformacoesModel} from "../Pagina/interface/informacoes";
-import {MateriasModel, NotasModel} from "../Pagina/interface/materias";
+import { NotasModel} from "../Pagina/interface/materias";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +12,7 @@ import {MateriasModel, NotasModel} from "../Pagina/interface/materias";
 
 export class Service{
   private alunos = new Subject<any>();
+  public EmmitIdAluno = new EventEmitter<string>();
 
   constructor(
     private firestore: AngularFirestore
@@ -46,6 +42,12 @@ export class Service{
   getAluno(id: string): AngularFirestoreDocument<AlunosModel>{
     return this.firestore.collection('Alunos').doc(id);
   }
+
+  saberIdAluno(id: string): void{
+    this.EmmitIdAluno.emit(id);
+  }
+
+
 
   updateAluno(id: string, aluno: any): Promise<void>{
     return this.firestore.collection('Alunos').doc(id).update(aluno)

@@ -3,15 +3,17 @@ import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-consultar',
   templateUrl: './consultar.component.html',
   styleUrls: ['./consultar.component.css'],
-
 })
+
 export class ConsultarComponent implements OnInit {
   public alunos: AlunosModel[] = [];
+  public static idAluno = new EventEmitter<string>();
+  public loading: boolean = true;
+
 
   constructor(
     private armazem: Service,
@@ -20,16 +22,16 @@ export class ConsultarComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarAlunos();
-
   }
 
   public listarAlunos(): void{
     this.armazem.getAllAlunos().get().subscribe((doc)=>{
       this.alunos = [];
+      this.loading = false;
       doc.forEach((element: any)=>{
-       this.alunos.push({
-         id: element.id,
-         ...element.data()
+        this.alunos.push({
+          id: element.id,
+          ...element.data()
         });
       });
     });
@@ -37,6 +39,13 @@ export class ConsultarComponent implements OnInit {
 
   public navigateTo(url:string): void {
     this.router.navigate([url]);
+  }
+
+  public  inserirNotas(id: string): void{
+    this.router.navigate(['Consultar/Inserir']);
+    console.log(id)
+    this.armazem.saberIdAluno(id);
+    ConsultarComponent.idAluno.emit(id)
   }
 
 

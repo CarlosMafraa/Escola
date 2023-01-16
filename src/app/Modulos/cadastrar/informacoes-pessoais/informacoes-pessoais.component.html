@@ -51,20 +51,19 @@
             </div>
           </div>
         </div>
-        <div class="text-center">
+        <div class="text-center"  *ngIf="isButton">
           <p>Deseja adicionar outro Responsável?</p>
           <div class="d-grid col-4 mx-auto">
             <button type="button"
                     class="btn btn-sm btn-outline-primary"
                     title="Adicionar Responsável"
-                    (click)="addSegResponsavel()"
-                    *ngIf="isButton">
+                    (click)="addSegResponsavel()">
               <i class="bi bi-plus-circle"></i> Adicionar</button>
           </div>
         </div>
 
         <div class="mx-1 my-3 pt-3"  *ngIf="isChecked">
-          <div class="m-0 p-0 border rounded row">
+          <div class="mx-2 my-2 border rounded row">
             <p class="title ms-3 px-2 fs-5 bg-white text-dark">2º Responsável</p>
 
             <div class="row g-3 p-0 m-0">
@@ -114,7 +113,7 @@
               </div>
             </div>
           </div>
-          <div class="text-center my-3">
+          <div class="d-grid col-4 mx-auto">
             <button type="button" class="btn btn-sm btn-outline-danger "
                     title="Adicionar Responsável"
                     (click)="removeSegResponsavel()"><i class="bi bi-x-circle"></i> Remover

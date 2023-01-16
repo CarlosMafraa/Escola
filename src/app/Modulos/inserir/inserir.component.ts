@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Materias, NotasModel} from "../../Pagina/interface/materias";
 import {Service} from "../../Service/service.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
+import {ConsultarComponent} from "../consultar/consultar.component";
+import * as url from "url";
+import {elementAt} from "rxjs";
 
 @Component({
   selector: 'app-inserir',
@@ -10,17 +13,19 @@ import {AlunosModel} from "../../Pagina/interface/alunos";
   styleUrls: ['./inserir.component.css']
 })
 export class InserirComponent implements OnInit {
-  public aluno: AlunosModel;
   public alunos: AlunosModel[] = [];
   public notas: NotasModel;
   public nota : NotasModel [] = []
   public loading : boolean = false;
   public formGroup: FormGroup;
+  public id: string;
+  public idAluno: string;
 
 
   constructor(
     private armazem: Service,
     public formBuilder: FormBuilder,
+
   ) {
     this.formGroup = this.formBuilder.group({
       nota1:['',[Validators.required]],
@@ -31,9 +36,11 @@ export class InserirComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    ConsultarComponent.idAluno.subscribe((id: string) =>{
+      this.id = id;
+      });
+   // this.armazem.EmmitIdAluno.subscribe()
   }
-
 
   public materia: Array<Materias> = [
     {
@@ -62,12 +69,26 @@ export class InserirComponent implements OnInit {
     }
   ]
 
+  // public getNotas(): void{
+  //   this.armazem.getAllNotas().get().subscribe((doc)=>{
+  //     this.nota = [];
+  //     doc.forEach((element: any)=>{
+  //       this.nota.push({
+  //         id: element.id,
+  //         ...element.data()
+  //       });
+  //     });
+  //   })
+  // }
+
+
+
+
 
   public cadastrarNota1(): void{
     const notas = this.formGroup.value as NotasModel;
     notas.nota1 = this.formGroup.get('nota1')?.value;
     console.log(notas.nota1)
-    console.log(this.aluno.id)
   }
 //
   public cadastrarNota2(): void{
@@ -77,6 +98,7 @@ export class InserirComponent implements OnInit {
   }
   public cadastrarNota3(): void{
     const notas = this.formGroup.value as NotasModel;
+
     notas.nota3 = this.formGroup.get('nota3')?.value;
     this.loading = true;
     this.armazem.createNota(this.notas).then(()=>{

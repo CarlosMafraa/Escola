@@ -12,19 +12,24 @@ const routes: Routes = [
     children:[
 
       {
-      path: 'Cadastrar',
-      title: 'Cadastrar',
-      component: CadastrarComponent,
+        path: 'Cadastrar',
+        title: 'Cadastrar',
+        component: CadastrarComponent,
       },
       {
         path: 'Consultar',
-        title: 'Consultar',
-        component: ConsultarComponent,
-      },
-      {
-        path: 'Inserir',
-        title: 'Inserir',
-        component: InserirComponent,
+        children:[
+          {
+            path:'',
+            title: 'Consultar',
+            component: ConsultarComponent,
+          },
+          {
+            path: 'Inserir',
+            title: 'Inserir',
+            component: InserirComponent,
+          }
+        ]
       },
       {
         path: 'Desempenho',

@@ -18,7 +18,6 @@ export class CadastrarComponent implements OnInit {
   public aluno: AlunosModel;
   public endereco: EnderecoModel;
   public informacao: InformacoesModel;
-  public id: string | null;
 
   constructor(
     private armazem: Service,
@@ -30,8 +29,6 @@ export class CadastrarComponent implements OnInit {
       CPF:['',[Validators.required]],
       nascAluno:['',[Validators.required]],
     })
-    this.id = this.aRouter.snapshot.paramMap.get('id');
-    console.log(this.id)
 
   }
 
