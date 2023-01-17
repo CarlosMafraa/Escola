@@ -1,8 +1,7 @@
-<div class="border p-0 m-0">
-  <div class=" px-2 py-2 d-flex align-items-center border">
-    <i class="bi bi-box-seam mx-2"></i>
-    <h6 class="title mx-3 mt-2 fs-5 bg-white ">Listagem de Alunos</h6>
-  </div>
+<div class="mat-elevation-z8 mx-3 my-3">
+    <div class="p-2">
+        <p class="title mx-3 mt-2 fs-5"><i class="bi bi-box-seam mx-2"></i> Listagem de Alunos</p>
+    </div>
 
   <div class="d-flex justify-content-center">
     <div class="spinner-border text-secondary m-5" role="status" *ngIf="loading">
@@ -13,7 +12,7 @@
   <table class="table text-center" *ngIf="alunos.length > 0; else nadaAluno">
     <thead>
     <tr>
-      <th scope="col" class="py-3"></th>
+      <th scope="col" class="py-3">#</th>
       <th scope="col" class="py-3">CPF</th>
       <th scope="col" class="py-3">Nome</th>
       <th scope="col" class="py-3">Data de Nascimento</th>
@@ -28,7 +27,7 @@
       <td class="py-3">{{ aluno.nascAluno | mask: 'd0/M0/0000'}}</td>
       <td>
         <i type="button" (click)="navigateTo('Cadastrar')" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
-        <i type="button" (click)="inserirNotas(aluno.id)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
+        <i type="button" (click)="inserirNotas(aluno)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
         <i type="button" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
       </td>
     </tr>
@@ -40,6 +39,4 @@
       Não há nenhum aluno cadastrado!
     </div>
   </ng-template>
-
-
 </div>

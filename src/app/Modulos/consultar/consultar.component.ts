@@ -41,11 +41,9 @@ export class ConsultarComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  public  inserirNotas(id: string): void{
+  public inserirNotas(aluno: AlunosModel): void{
     this.router.navigate(['Consultar/Inserir']);
-    console.log(id)
-    this.armazem.saberIdAluno(id);
-    ConsultarComponent.idAluno.emit(id)
+    this.armazem.setIdAluno(aluno);
   }
 
 

@@ -1,11 +1,8 @@
-import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Materias, NotasModel} from "../../Pagina/interface/materias";
 import {Service} from "../../Service/service.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
-import {ConsultarComponent} from "../consultar/consultar.component";
-import * as url from "url";
-import {elementAt} from "rxjs";
 
 @Component({
   selector: 'app-inserir',
@@ -13,14 +10,11 @@ import {elementAt} from "rxjs";
   styleUrls: ['./inserir.component.css']
 })
 export class InserirComponent implements OnInit {
-  public alunos: AlunosModel[] = [];
+  public aluno: AlunosModel;
   public notas: NotasModel;
   public nota : NotasModel [] = []
   public loading : boolean = false;
   public formGroup: FormGroup;
-  public id: string;
-  public idAluno: string;
-
 
   constructor(
     private armazem: Service,
@@ -32,15 +26,46 @@ export class InserirComponent implements OnInit {
       nota2:['',[Validators.required]],
       nota3:['',[Validators.required]],
     })
-
   }
 
   ngOnInit(): void {
-    ConsultarComponent.idAluno.subscribe((id: string) =>{
-      this.id = id;
-      });
-   // this.armazem.EmmitIdAluno.subscribe()
+    this.armazem.getIdAluno().subscribe(aluno =>{
+      this.aluno = aluno;
+    })
   }
+
+  public publicvalueForm():any{
+    const notas = this.formGroup.value as NotasModel;
+    notas.nota1 = this.formGroup.get('nota1')?.value;
+    notas.nota2 = this.formGroup.get('nota2')?.value;
+    notas.nota3 = this.formGroup.get('nota3')?.value;
+   return notas
+  }
+
+  public inserir(): void{
+    this.notas = this.publicvalueForm();
+    this.notas.idAluno = this.aluno.id
+    this.loading = true;
+    this.armazem.createNota(this.notas).then(()=>{
+      this.loading = false;
+      this.formGroup?.reset();
+    },error =>{
+      this.loading = false;
+    })
+  }
+
+  // public getNotas(): void{
+  //   this.armazem.getAllNotas().get().subscribe((doc)=>{
+  //     this.nota = [];
+  //     doc.forEach((element: any)=>{
+  //       this.nota.push({
+  //         id: element.id,
+  //         ...element.data()
+  //       });
+  //     });
+  //   })
+  // }
+
 
   public materia: Array<Materias> = [
     {
@@ -68,45 +93,5 @@ export class InserirComponent implements OnInit {
       title: "Inglês"
     }
   ]
-
-  // public getNotas(): void{
-  //   this.armazem.getAllNotas().get().subscribe((doc)=>{
-  //     this.nota = [];
-  //     doc.forEach((element: any)=>{
-  //       this.nota.push({
-  //         id: element.id,
-  //         ...element.data()
-  //       });
-  //     });
-  //   })
-  // }
-
-
-
-
-
-  public cadastrarNota1(): void{
-    const notas = this.formGroup.value as NotasModel;
-    notas.nota1 = this.formGroup.get('nota1')?.value;
-    console.log(notas.nota1)
-  }
-//
-  public cadastrarNota2(): void{
-    const notas = this.formGroup.value as NotasModel;
-    notas.nota2 = this.formGroup.get('nota2')?.value;
-    console.log(notas.nota2)
-  }
-  public cadastrarNota3(): void{
-    const notas = this.formGroup.value as NotasModel;
-
-    notas.nota3 = this.formGroup.get('nota3')?.value;
-    this.loading = true;
-    this.armazem.createNota(this.notas).then(()=>{
-      this.loading = false;
-      this.formGroup?.reset();
-    },error =>{
-      this.loading = false;
-    })
-  }
 
 }

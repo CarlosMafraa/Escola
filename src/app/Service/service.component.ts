@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference } from "@angular/fire/compat/firestore";
 import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
@@ -12,11 +12,19 @@ import { NotasModel} from "../Pagina/interface/materias";
 
 export class Service{
   private alunos = new Subject<any>();
-  public EmmitIdAluno = new EventEmitter<string>();
+  private idAluno = new BehaviorSubject<AlunosModel>(undefined);
 
   constructor(
     private firestore: AngularFirestore
   ) {}
+
+
+  setIdAluno(aluno: AlunosModel): void{
+    this.idAluno.next(aluno);
+  }
+  getIdAluno():Observable<AlunosModel>{
+    return this.idAluno.asObservable();
+  }
 
   createId(): string{
     return this.firestore.collection('Alunos').doc().ref.id;
@@ -43,21 +51,13 @@ export class Service{
     return this.firestore.collection('Alunos').doc(id);
   }
 
-  saberIdAluno(id: string): void{
-    this.EmmitIdAluno.emit(id);
-  }
-
-
-
   updateAluno(id: string, aluno: any): Promise<void>{
     return this.firestore.collection('Alunos').doc(id).update(aluno)
   }
 
-
   deletar(id: string): Promise<any>{
     return this.firestore.collection('Alunos').doc(id).delete();
   }
-
 
   adicionar(alunos: AlunosModel){
     this.alunos.next(alunos)
@@ -66,7 +66,6 @@ export class Service{
   getEditar(): Observable<AlunosModel>{
     return this.alunos.asObservable();
   }
-
 
   createIdInformacoes(): string{
     return this.firestore.collection('Informações').doc().ref.id;
@@ -118,7 +117,7 @@ export class Service{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
     const ref = this.getNota(nota.idAluno).doc(nota.id).ref
-    return this.getNota(nota.idAluno).ref.where('idAluno','==',nota.idAluno).get().then((Doc)=>{
+    return this.getNota(nota.idAluno).ref.where('nota1','==',nota.idAluno).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
       }
