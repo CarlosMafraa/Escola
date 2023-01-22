@@ -39,11 +39,11 @@ export class CadastrarComponent implements OnInit {
   //   if(this.formGroup.invalid){
   //     return;
   //   }
-  //   if(this.id === null){
+    if(this.aluno === null){
       this.aluno = this.valueForm();
       return this.aluno;
-  //     this.cadastrar();
-  //   }
+      this.cadastrar();
+    }
   //   this.editarAluno(this.id);
   //
   // }
@@ -92,14 +92,14 @@ export class CadastrarComponent implements OnInit {
     })
   }
 
-  // public editarAluno(id: string): void{
-  //   const aluno = this.formGroup.value as AlunosModel;
-  //   aluno.CPF = this.formGroup.get('CPF')?.value;
-  //   aluno.nome = this.formGroup.get('nome')?.value;
-  //   aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
-  //
-  //   this.armazem.getEditar()
-  //
-  // }
+  public editarAluno(id: string): void{
+    const aluno = this.formGroup.value as AlunosModel;
+    aluno.CPF = this.formGroup.get('CPF')?.value;
+    aluno.nome = this.formGroup.get('nome')?.value;
+    aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
+
+    this.armazem.getEditar()
+
+  }
 
 }

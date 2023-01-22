@@ -6,43 +6,48 @@
   <form [formGroup]="formGroup">
     <div class="mx-3">
       <div class="row justify-content-center">
-        <div class="col-5 col-sm-4 col-md-3 card my-3 mx-3" *ngFor="let materia of materia; let i = index">
+        <div class="col-6 col-sm-4 col-md-4 card my-3 mx-3" *ngFor="let materia of materia; let i = index">
           <div class="card-body">
             <p class="card-title text-center fs-5">{{materia.title}}</p>
-
-            <div class="d-flex my-3">
-              <div class="rounded bg-primary d-flex me-1 p-1">
-                <input type="text" class="form-control" placeholder="1º Nota" formControlName="nota1" mask="000">
-              </div>
-              <div *ngIf="this.nota[i].materia === materia.title">
-                <div class="rounded bg-light d-flex me-1 p-1">
-                  <input type="text" class="form-control text-center" [value]="this.nota[i].nota1" disabled>
+            <div class="d-flex">
+              <div class="col-sm-6 col-md-6">
+                <div class="my-1">
+                  <div class="rounded bg-primary d-flex me-1 p-1">
+                    <input type="text" class="form-control" placeholder="1º Nota" formControlName="nota1" mask="000">
+                  </div>
+                </div>
+                <div class="my-1">
+                  <div class="rounded bg-primary d-flex me-1 p-1">
+                    <input type="text" class="form-control" placeholder="2º Nota" formControlName="nota2" mask="000">
+                  </div>
+                </div>
+                <div class="my-1">
+                  <div class="rounded bg-primary d-flex me-1 p-1">
+                    <input type="text" class="form-control" placeholder="3º Nota" formControlName="nota3" mask="000">
+                  </div>
                 </div>
               </div>
+<!--              <div class="col-sm-6 col-md-6" *ngIf="this.nota[i].materia === materia.title && this.nota[i].materia !== undefined ">-->
+<!--                <div class="my-1" >-->
+<!--                  <div class="rounded bg-light d-flex me-1 p-1">-->
+<!--                    <input type="text" class="form-control text-center" [value]="this.nota[i].nota1" disabled>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="my-1">-->
+<!--                  <div class="rounded bg-light d-flex me-1 p-1">-->
+<!--                    <input type="text" class="form-control text-center" [value]="this.nota[i].nota2" disabled>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="my-1">-->
+<!--                  <div class="rounded bg-light d-flex me-1 p-1">-->
+<!--                    <input type="textr" class="form-control text-center" [value]="this.nota[i].nota3" disabled>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
 
-            <div class="d-flex my-3">
-              <div class="rounded bg-primary d-flex me-2 p-1">
-                <input type="text" class="form-control" placeholder="2º Nota" formControlName="nota2" mask="000">
-              </div>
-              <div *ngIf="this.nota[i].materia === materia.title">
-              <div class="rounded bg-light d-flex me-1 p-1">
-                <input type="text" class="form-control text-center" [value]="this.nota[i].nota2" disabled>
-              </div>
-            </div>
-            </div>
-            <div class="d-flex my-3">
-              <div class="rounded bg-primary d-flex me-2 p-1">
-                <input type="text" class="form-control" placeholder="3º Nota" formControlName="nota3" mask="000">
-              </div>
-              <div *ngIf="this.nota[i].materia === materia.title">
-              <div class="rounded bg-light d-flex me-1 p-1">
-                <input type="textr" class="form-control text-center" [value]="this.nota[i].nota3" disabled>
-              </div>
-            </div>
-            </div>
             <div class="text-center">
-              <button type="button" class="btn btn-outline-dark" (click)="inserir(materia.title)" >Salvar</button>
+              <button type="button" class="btn btn-outline-dark my-2" (click)="inserir(materia.title)" >Salvar</button>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import {Service} from "../../Service/service.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {StorageService} from "../../Service/storage/storage.service";
+import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
 
 @Component({
   selector: 'app-inserir',
@@ -33,6 +34,7 @@ export class InserirComponent implements OnInit {
   ngOnInit(): void {
     this.getAluno();
     this.consultar();
+
   }
 
   public getAluno(): any{
@@ -49,9 +51,9 @@ export class InserirComponent implements OnInit {
     return notas
   }
 
-  public inserir(materia: string): void{
+  public inserir(materia: string ): void{
     this.notas = this.publicvalueForm();
-    this.notas.materia = materia;
+    this.notas.materia = materia ;
     this.notas.idAluno = this.aluno.id
     this.loading = true;
     this.armazem.createNota(this.notas).then(()=>{
@@ -63,16 +65,16 @@ export class InserirComponent implements OnInit {
   }
 
   public consultar(): any{
-  this.armazem.getNota(this.aluno.id).get().subscribe((doc)=>{
-    this.nota = [];
-    this.loading = false;
-    doc.forEach((element: any)=>{
-      this.nota.push({
-        id: element.id,
-        ...element.data()
+    this.armazem.getNota(this.aluno.id).get().subscribe((doc)=>{
+        this.nota = [];
+        this.loading = false;
+            doc.forEach((element: any) => {
+              this.nota.push({
+                id: element.id,
+                ...element.data()
+              })
+            })
       });
-    });
-  });
   }
 
   public materia: Array<Materias> = [
