@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,
 import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
 import {InformacoesModel} from "../Pagina/interface/informacoes";
-import { NotasModel} from "../Pagina/interface/materias";
+import {NotasModel} from "../Pagina/interface/materias";
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +12,17 @@ import { NotasModel} from "../Pagina/interface/materias";
 
 export class Service{
   private alunos = new Subject<any>();
-  private idAluno = new BehaviorSubject<AlunosModel>(undefined);
 
   constructor(
     private firestore: AngularFirestore
   ) {}
 
 
-  setIdAluno(aluno: AlunosModel): void{
-    this.idAluno.next(aluno);
-  }
-  getIdAluno():Observable<AlunosModel>{
-    return this.idAluno.asObservable();
-  }
-
   createId(): string{
     return this.firestore.collection('Alunos').doc().ref.id;
   }
 
-  createCadastro(alunos: AlunosModel): Promise<void>{
+  createCadastro(alunos: AlunosModel): Promise<any>{
     alunos.id = this.createId();
     const batch = this.firestore.firestore.batch();
     const ref = this.firestore.collection('Alunos').doc(alunos.id).ref;
@@ -48,7 +40,7 @@ export class Service{
   }
 
   getAluno(id: string): AngularFirestoreDocument<AlunosModel>{
-    return this.firestore.collection('Alunos').doc(id);
+    return this.firestore.collection('Alunos').doc(id)
   }
 
   updateAluno(id: string, aluno: any): Promise<void>{
@@ -117,7 +109,7 @@ export class Service{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
     const ref = this.getNota(nota.idAluno).doc(nota.id).ref
-    return this.getNota(nota.idAluno).ref.where('nota1','==',nota.idAluno).get().then((Doc)=>{
+    return this.getNota(nota.idAluno).ref.where('notas','==',nota.idAluno).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
       }
@@ -132,11 +124,6 @@ export class Service{
   getAllNotas(): AngularFirestoreCollection<NotasModel>{
     return this.firestore.collection('Notas');
   }
-
-
-
-
-
 
 }
 

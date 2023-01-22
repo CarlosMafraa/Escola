@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {Router} from "@angular/router";
+import {StorageService} from "../../Service/storage/storage.service";
 
 @Component({
   selector: 'app-consultar',
@@ -17,6 +18,7 @@ export class ConsultarComponent implements OnInit {
 
   constructor(
     private armazem: Service,
+    private storage : StorageService,
     private router: Router,
   ) { }
 
@@ -43,7 +45,7 @@ export class ConsultarComponent implements OnInit {
 
   public inserirNotas(aluno: AlunosModel): void{
     this.router.navigate(['Consultar/Inserir']);
-    this.armazem.setIdAluno(aluno);
+    this.storage.setData('aluno',aluno)
   }
 
 

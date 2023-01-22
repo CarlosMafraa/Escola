@@ -3,6 +3,7 @@ import {Materias, NotasModel} from "../../Pagina/interface/materias";
 import {Service} from "../../Service/service.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
+import {StorageService} from "../../Service/storage/storage.service";
 
 @Component({
   selector: 'app-inserir',
@@ -18,6 +19,7 @@ export class InserirComponent implements OnInit {
 
   constructor(
     private armazem: Service,
+    private storage : StorageService,
     public formBuilder: FormBuilder,
 
   ) {
@@ -29,9 +31,14 @@ export class InserirComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.armazem.getIdAluno().subscribe(aluno =>{
-      this.aluno = aluno;
-    })
+    this.getAluno();
+    this.consultar();
+  }
+
+  public getAluno(): any{
+    const aluno = this.storage.getData('aluno')
+    this.aluno = aluno;
+    return aluno
   }
 
   public publicvalueForm():any{
@@ -39,11 +46,12 @@ export class InserirComponent implements OnInit {
     notas.nota1 = this.formGroup.get('nota1')?.value;
     notas.nota2 = this.formGroup.get('nota2')?.value;
     notas.nota3 = this.formGroup.get('nota3')?.value;
-   return notas
+    return notas
   }
 
-  public inserir(): void{
+  public inserir(materia: string): void{
     this.notas = this.publicvalueForm();
+    this.notas.materia = materia;
     this.notas.idAluno = this.aluno.id
     this.loading = true;
     this.armazem.createNota(this.notas).then(()=>{
@@ -54,44 +62,28 @@ export class InserirComponent implements OnInit {
     })
   }
 
-  // public getNotas(): void{
-  //   this.armazem.getAllNotas().get().subscribe((doc)=>{
-  //     this.nota = [];
-  //     doc.forEach((element: any)=>{
-  //       this.nota.push({
-  //         id: element.id,
-  //         ...element.data()
-  //       });
-  //     });
-  //   })
-  // }
-
+  public consultar(): any{
+  this.armazem.getNota(this.aluno.id).get().subscribe((doc)=>{
+    this.nota = [];
+    this.loading = false;
+    doc.forEach((element: any)=>{
+      this.nota.push({
+        id: element.id,
+        ...element.data()
+      });
+    });
+  });
+  }
 
   public materia: Array<Materias> = [
-    {
-      title: "Português"
-    },
-    {
-      title: "Matamática"
-    },
-    {
-      title: "História"
-    },
-    {
-      title: "Geografia"
-    },
-    {
-      title: "Ciências"
-    },
-    {
-      title: "Educação Física"
-    },
-    {
-      title: "Educação Artistíca"
-    },
-    {
-      title: "Inglês"
-    }
+    {title: "Português"},
+    {title: "Matamática"},
+    {title: "História"},
+    {title: "Geografia"},
+    {title: "Ciências"},
+    {title: "Educação Física"},
+    {title: "Educação Artistíca"},
+    {title: "Inglês"}
   ]
 
 }
