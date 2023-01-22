@@ -25,6 +25,7 @@ import {FooterComponent} from "./Pagina/footer/footer.component";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HomeComponent} from "./Home/home.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     InserirComponent,
     ConsultarComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent,
   ],
   imports: [
     FormsModule,
