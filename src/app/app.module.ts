@@ -26,6 +26,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HomeComponent} from "./Home/home.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import {HomeComponent} from "./Home/home.component";
     ConsultarComponent,
     MenuComponent,
     FooterComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     FormsModule,
@@ -58,6 +59,7 @@ import {HomeComponent} from "./Home/home.component";
     NgxMaskDirective,
     NgxMaskPipe,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,

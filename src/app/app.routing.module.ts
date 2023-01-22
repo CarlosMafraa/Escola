@@ -4,13 +4,17 @@ import {CadastrarComponent} from "./Modulos/cadastrar/cadastrar.component";
 import {DesempenhoComponent} from "./Modulos/desempenho/desempenho.component";
 import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {InserirComponent} from "./Modulos/inserir/inserir.component";
+import {HomeComponent} from "./Home/home.component";
 
 const routes: Routes = [
   {
     path: '',
-    title:'Pagina Inicial',
     children:[
-
+      {
+        path:'',
+        title:'Pagina Inicial',
+        component: HomeComponent,
+      },
       {
         path: 'Cadastrar',
         title: 'Cadastrar',
