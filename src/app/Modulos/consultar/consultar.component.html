@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <table class="table text-center" *ngIf="alunos.length > 0; else nadaAluno">
+  <table class="table text-center" *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno">
     <thead>
     <tr>
       <th scope="col" class="py-3">#</th>

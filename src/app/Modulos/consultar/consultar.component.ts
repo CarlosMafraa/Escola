@@ -11,7 +11,7 @@ import {StorageService} from "../../Service/storage/storage.service";
 })
 
 export class ConsultarComponent implements OnInit {
-  public alunos: AlunosModel[] = [];
+  public alunos: AlunosModel[];
   public static idAluno = new EventEmitter<string>();
   public loading: boolean = true;
 
@@ -27,16 +27,10 @@ export class ConsultarComponent implements OnInit {
   }
 
   public listarAlunos(): void{
-    this.armazem.getAllAlunos().get().subscribe((doc)=>{
-      this.alunos = [];
+    this.armazem.getAllAlunos().valueChanges().subscribe((res)=>{
       this.loading = false;
-      doc.forEach((element: any)=>{
-        this.alunos.push({
-          id: element.id,
-          ...element.data()
-        });
-      });
-    });
+      this.alunos = res});
+
   }
 
   public navigateTo(url:string): void {

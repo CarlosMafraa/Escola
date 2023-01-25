@@ -19,13 +19,13 @@ export class Service{
 
 
   createId(): string{
-    return this.firestore.collection('Alunos').doc().ref.id;
+    return this.firestore.collection<AlunosModel>('Alunos').doc().ref.id;
   }
 
   createCadastro(alunos: AlunosModel): Promise<any>{
     alunos.id = this.createId();
     const batch = this.firestore.firestore.batch();
-    const ref = this.firestore.collection('Alunos').doc(alunos.id).ref;
+    const ref = this.firestore.collection<AlunosModel>('Alunos').doc(alunos.id).ref;
     return this.firestore.collection('Alunos').ref.where('CPF','==', alunos.CPF).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error('Você já possui um cadastro!')
@@ -36,31 +36,32 @@ export class Service{
   }
 
   getAllAlunos(): AngularFirestoreCollection<AlunosModel>{
-    return this.firestore.collection('Alunos',(ref: CollectionReference) => ref.orderBy('nome',"asc"));
+    return this.firestore.collection<AlunosModel>('Alunos',(ref: CollectionReference) => ref.orderBy('nome',"asc"));
   }
 
   getAluno(id: string): AngularFirestoreDocument<AlunosModel>{
-    return this.firestore.collection('Alunos').doc(id)
+    return this.firestore.collection<AlunosModel>('Alunos').doc(id)
   }
 
-  updateAluno(id: string, aluno: any): Promise<void>{
-    return this.firestore.collection('Alunos').doc(id).update(aluno)
+  updateAluno(aluno: AlunosModel): Promise<void>{
+    return this.firestore.doc<AlunosModel>(aluno.id).update(aluno)
   }
 
-  deletar(id: string): Promise<any>{
-    return this.firestore.collection('Alunos').doc(id).delete();
-  }
+  // deletar(aluno: AlunosModel): Promise<any>{
+  //  const  batch = this.firestore.firestore.batch();
+  //   // const ref = this.getAluno(aluno.id).ref
+  //   const ref = this.firestore.collection<AlunosModel>('Alunos').doc(aluno.id).ref;
+  //
+  //   return ref.get().then();
+  // }
 
-  adicionar(alunos: AlunosModel){
-    this.alunos.next(alunos)
-  }
 
   getEditar(): Observable<AlunosModel>{
     return this.alunos.asObservable();
   }
 
   createIdInformacoes(): string{
-    return this.firestore.collection('Informações').doc().ref.id;
+    return this.firestore.collection<InformacoesModel>('Informações').doc().ref.id;
   }
 
   createInformacoes(informacoes: InformacoesModel): Promise<void>{
@@ -109,7 +110,7 @@ export class Service{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
     const ref = this.getNota(nota.idAluno).doc(nota.id).ref
-    return this.getNota(nota.idAluno).ref.where('notas','==',nota.idAluno).get().then((Doc)=>{
+    return this.getNota(nota.idAluno).ref.where('materia','==',nota.materia).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
       }

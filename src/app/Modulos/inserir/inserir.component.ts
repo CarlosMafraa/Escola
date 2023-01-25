@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {StorageService} from "../../Service/storage/storage.service";
 import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-inserir',
@@ -14,7 +15,7 @@ import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util
 export class InserirComponent implements OnInit {
   public aluno: AlunosModel;
   public notas: NotasModel;
-  public nota : NotasModel [] = []
+  public nota : NotasModel [];
   public loading : boolean = false;
   public formGroup: FormGroup;
 
@@ -25,16 +26,16 @@ export class InserirComponent implements OnInit {
 
   ) {
     this.formGroup = this.formBuilder.group({
-      nota1:['',[Validators.required]],
-      nota2:['',[Validators.required]],
-      nota3:['',[Validators.required]],
+      nota1:['',[Validators.required,Validators.requiredTrue]],
+      nota2:['',[Validators.required, Validators.requiredTrue]],
+      nota3:['',[Validators.required,Validators.requiredTrue]],
     })
   }
 
   ngOnInit(): void {
     this.getAluno();
     this.consultar();
-
+    console.log(this.consultar())
   }
 
   public getAluno(): any{
@@ -58,28 +59,23 @@ export class InserirComponent implements OnInit {
     this.loading = true;
     this.armazem.createNota(this.notas).then(()=>{
       this.loading = false;
-      this.formGroup?.reset();
+      // this.formGroup?.reset();
     },error =>{
       this.loading = false;
     })
   }
 
-  public consultar(): any{
-    this.armazem.getNota(this.aluno.id).get().subscribe((doc)=>{
-        this.nota = [];
-        this.loading = false;
-            doc.forEach((element: any) => {
-              this.nota.push({
-                id: element.id,
-                ...element.data()
-              })
-            })
-      });
+  public consultar(): void{
+    this.armazem.getNota(this.aluno.id).valueChanges().subscribe((res)=>{
+      if(res.length > 0 && Array.isArray(res)){
+      this.loading = false;
+      this.nota = res;}
+    });
   }
 
   public materia: Array<Materias> = [
     {title: "Português"},
-    {title: "Matamática"},
+    {title: "Matemática"},
     {title: "História"},
     {title: "Geografia"},
     {title: "Ciências"},
