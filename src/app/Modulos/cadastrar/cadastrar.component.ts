@@ -98,7 +98,7 @@ export class CadastrarComponent implements OnInit {
     aluno.nome = this.formGroup.get('nome')?.value;
     aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
 
-    this.armazem.getEditar()
+    // this.armazem.getEditar()
 
   }
 

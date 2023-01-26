@@ -12,7 +12,6 @@ import {StorageService} from "../../Service/storage/storage.service";
 
 export class ConsultarComponent implements OnInit {
   public alunos: AlunosModel[];
-  public static idAluno = new EventEmitter<string>();
   public loading: boolean = true;
 
 

@@ -5,13 +5,14 @@ import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
 import {InformacoesModel} from "../Pagina/interface/informacoes";
 import {NotasModel} from "../Pagina/interface/materias";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class Service{
-  private alunos = new Subject<any>();
+  private aluno: AngularFirestoreCollection<AlunosModel>;
 
   constructor(
     private firestore: AngularFirestore
@@ -56,9 +57,9 @@ export class Service{
   // }
 
 
-  getEditar(): Observable<AlunosModel>{
-    return this.alunos.asObservable();
-  }
+  // getEditar(): Observable<AlunosModel>{
+  //   return this.alunos.asObservable();
+  // }
 
   createIdInformacoes(): string{
     return this.firestore.collection<InformacoesModel>('Informações').doc().ref.id;
@@ -110,7 +111,7 @@ export class Service{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
     const ref = this.getNota(nota.idAluno).doc(nota.id).ref
-    return this.getNota(nota.idAluno).ref.where('materia','==',nota.materia).get().then((Doc)=>{
+    return this.getNota(nota.idAluno).ref.where('numero','==',nota.num_materia).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
       }
@@ -120,7 +121,21 @@ export class Service{
   }
 
   getNota(idAluno: string): AngularFirestoreCollection<NotasModel>{
-    return this.getAluno(idAluno).collection('Nota');
+    return this.getAluno(idAluno).collection('Nota',ref => ref.orderBy('num_materia',"asc"));
+  }
+
+  getEditarNota(nota: NotasModel): Promise<void>{
+    // this.firestore.collection("Alunos").doc("Notas");
+    return this.firestore.collection("Alunos").doc("Notas").update(nota)
+      // "nota1": nota.nota1,
+      // "nota2": nota.nota2,
+      // "nota3": nota.nota3,
+    // })
+    // return this.getAluno(nota.idAluno).collection('Nota').doc(nota.id).update({
+    //   "nota1": nota.nota1,
+    //   "nota2": nota.nota2,
+    //   "nota3": nota.nota3,
+    // })
   }
   getAllNotas(): AngularFirestoreCollection<NotasModel>{
     return this.firestore.collection('Notas');

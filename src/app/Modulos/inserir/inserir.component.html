@@ -14,6 +14,7 @@
                 <div class="my-1">
                   <div class="rounded bg-primary d-flex me-1 p-1">
                     <input type="text" class="form-control" placeholder="1º Nota" formControlName="nota1" mask="000">
+                    <!--                    [ngClass]="{'is-valid':formGroup.get('nota1')?.valid, 'is-invalid':formGroup.get('nota1')?.invalid}">-->
                   </div>
                 </div>
                 <div class="my-1">
@@ -27,21 +28,29 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-6" *ngIf="this.nota !== undefined">
-                <div *ngIf="this.nota[i].materia !==undefined && this.nota[i].materia === materia.title">
-                  <div class="my-1" >
-                    <div class="rounded bg-light d-flex me-1 p-1">
-                      <input type="text" class="form-control text-center" [value]="this.nota[i].nota1" disabled>
+<!--              <div class="d-flex justify-content-center">-->
+<!--                <div class="spinner-border text-secondary m-5" role="status" *ngIf="loading">-->
+<!--                  <span class="visually-hidden">Loading...</span>-->
+<!--                </div>-->
+<!--              </div>-->
+
+              <div class="col-sm-6 col-md-6" *ngIf="this.nota !== undefined && this.nota?.length > 0">
+                <div *ngFor="let notas of nota">
+                  <div *ngIf="notas.num_materia === i">
+                    <div class="my-1" >
+                      <div class="rounded bg-light d-flex me-1 p-1">
+                        <input type="text" class="form-control text-center" [value]="notas.nota1" disabled>
+                      </div>
                     </div>
-                  </div>
-                  <div class="my-1">
-                    <div class="rounded bg-light d-flex me-1 p-1">
-                      <input type="text" class="form-control text-center" [value]="this.nota[i].nota2" disabled>
+                    <div class="my-1">
+                      <div class="rounded bg-light d-flex me-1 p-1">
+                        <input type="text" class="form-control text-center" [value]="notas.nota2" disabled>
+                      </div>
                     </div>
-                  </div>
-                  <div class="my-1">
-                    <div class="rounded bg-light d-flex me-1 p-1">
-                      <input type="textr" class="form-control text-center" [value]="this.nota[i].nota3" disabled>
+                    <div class="my-1">
+                      <div class="rounded bg-light d-flex me-1 p-1">
+                        <input type="textr" class="form-control text-center" [value]="notas.nota3" disabled>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -49,17 +58,11 @@
             </div>
 
             <div class="text-center">
-              <button type="button" class="btn btn-outline-dark my-2" (click)="inserir(materia.title)" >Salvar</button>
+              <button type="button" class="btn btn-outline-dark my-2" (click)="decidir(materia.title,i)">Salvar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!--    <tr *ngFor="let aluno of nota">-->
-    <!--      <td class="py-3">{{aluno.nota1}}</td>-->
-    <!--      <td class="py-3">{{ aluno.nota2}}</td>-->
-    <!--      <td class="py-3">{{ aluno.nota3}}</td>-->
-    <!--    </tr>-->
   </form>
 </div>

@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Materias, NotasModel} from "../../Pagina/interface/materias";
+import {NotasModel} from "../../Pagina/interface/materias";
 import {Service} from "../../Service/service.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {StorageService} from "../../Service/storage/storage.service";
-import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {materia} from "../../Pagina/interface/materias";
 
 @Component({
   selector: 'app-inserir',
@@ -15,6 +14,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 export class InserirComponent implements OnInit {
   public aluno: AlunosModel;
   public notas: NotasModel;
+  public materia = materia;
   public nota : NotasModel [];
   public loading : boolean = false;
   public formGroup: FormGroup;
@@ -26,16 +26,24 @@ export class InserirComponent implements OnInit {
 
   ) {
     this.formGroup = this.formBuilder.group({
-      nota1:['',[Validators.required,Validators.requiredTrue]],
-      nota2:['',[Validators.required, Validators.requiredTrue]],
-      nota3:['',[Validators.required,Validators.requiredTrue]],
+      nota1:['',[Validators.required]],
+      nota2:['',[Validators.required]],
+      nota3:['',[Validators.required]],
     })
   }
 
   ngOnInit(): void {
     this.getAluno();
     this.consultar();
-    console.log(this.consultar())
+
+  }
+
+  public decidir(materia: string,index: number): void{
+    if(this.nota === undefined){
+      this.inserir(materia,index)
+    } else {
+      this.editar(materia,index)
+    }
   }
 
   public getAluno(): any{
@@ -52,10 +60,11 @@ export class InserirComponent implements OnInit {
     return notas
   }
 
-  public inserir(materia: string ): void{
+  public inserir(materia: string,index: number): void{
     this.notas = this.publicvalueForm();
+    this.notas.num_materia = index;
     this.notas.materia = materia ;
-    this.notas.idAluno = this.aluno.id
+    this.notas.idAluno = this.aluno.id;
     this.loading = true;
     this.armazem.createNota(this.notas).then(()=>{
       this.loading = false;
@@ -67,21 +76,24 @@ export class InserirComponent implements OnInit {
 
   public consultar(): void{
     this.armazem.getNota(this.aluno.id).valueChanges().subscribe((res)=>{
-      if(res.length > 0 && Array.isArray(res)){
-      this.loading = false;
-      this.nota = res;}
+      if(Array.isArray(res) && res.length > 0){
+        this.loading = false;
+        this.nota = res
+        console.log(res)
+      }
     });
   }
 
-  public materia: Array<Materias> = [
-    {title: "Português"},
-    {title: "Matemática"},
-    {title: "História"},
-    {title: "Geografia"},
-    {title: "Ciências"},
-    {title: "Educação Física"},
-    {title: "Educação Artistíca"},
-    {title: "Inglês"}
-  ]
+  public editar(materia: string,index: number): void{
+    this.notas = this.publicvalueForm();
+    this.notas.num_materia = index;
+    this.notas.materia = materia ;
+    this.notas.idAluno = this.aluno.id;
+    this.loading = true;
+    this.armazem.getEditarNota(this.notas).then((res)=>{
+      this.loading = false;
+    })
+  }
+
 
 }
