@@ -125,17 +125,25 @@ export class Service{
   }
 
   getEditarNota(nota: NotasModel): Promise<void>{
+    console.log("AQui")
     // this.firestore.collection("Alunos").doc("Notas");
-    return this.firestore.collection("Alunos").doc("Notas").update(nota)
-      // "nota1": nota.nota1,
-      // "nota2": nota.nota2,
-      // "nota3": nota.nota3,
+    // return this.firestore.collection("Alunos").doc("Nota").update({
+    //   "nota1": nota?.nota1,
+    //   "nota2": nota?.nota2,
+    //   "nota3": nota?.nota3,
     // })
-    // return this.getAluno(nota.idAluno).collection('Nota').doc(nota.id).update({
-    //   "nota1": nota.nota1,
-    //   "nota2": nota.nota2,
-    //   "nota3": nota.nota3,
-    // })
+  //   return this.getNota(nota.idAluno).doc(nota.id).update({
+  //     nota1: nota.nota1,
+  //     nota2: nota.nota2,
+  //     nota3: nota.nota3,
+  //   })
+    return this.firestore.collection('Nota').doc(nota.id).update({
+      nota1: nota.nota1,
+      nota2: nota.nota2,
+      nota3: nota.nota3,
+    })
+
+
   }
   getAllNotas(): AngularFirestoreCollection<NotasModel>{
     return this.firestore.collection('Notas');

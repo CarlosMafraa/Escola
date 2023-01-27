@@ -40,7 +40,6 @@ export class CadastrarComponent implements OnInit {
   //     return;
   //   }
     if(this.aluno === null){
-      this.aluno = this.valueForm();
       return this.aluno;
       this.cadastrar();
     }
@@ -69,6 +68,7 @@ export class CadastrarComponent implements OnInit {
   }
 
   public cadastrar(): void  {
+    this.aluno = this.valueForm();
     this.loading = true;
     this.armazem.createCadastro(this.aluno).then(()=>{
       this.loading = false;

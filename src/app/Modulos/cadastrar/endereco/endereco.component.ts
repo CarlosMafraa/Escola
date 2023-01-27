@@ -4,6 +4,7 @@ import {WebServiceService} from "../../../Service/api/web-service.service";
 import {AlunosModel} from "../../../Pagina/interface/alunos";
 import {EnderecoModel} from "../../../Pagina/interface/endereco";
 import {Service} from "../../../Service/service.component";
+import {InformacoesModel} from "../../../Pagina/interface/informacoes";
 
 @Component({
   selector: 'endereco',
@@ -12,9 +13,9 @@ import {Service} from "../../../Service/service.component";
   encapsulation: ViewEncapsulation.None,
 })
 export class EnderecoComponent implements OnInit {
-  @Input() aluno: AlunosModel;
   @Output() onChangeValues: EventEmitter<EnderecoModel> = new EventEmitter<EnderecoModel>();
   public formGroup: FormGroup;
+  public endereco: EnderecoModel;
   public cep: string = '';
   public logradouro: string = '';
   public numero: string = '';
@@ -38,6 +39,16 @@ export class EnderecoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public publicvalueForm():any{
+    const endereco = this.formGroup.value as EnderecoModel;
+    endereco.cep = this.formGroup.get('cep')?.value;
+    endereco.logradouro = this.formGroup.get('logradouro')?.value;
+    endereco.numero = this.formGroup.get('numero')?.value;
+    endereco.bairro = this.formGroup.get('bairro')?.value;
+    endereco.cidade = this.formGroup.get('cidade')?.value;
+    return endereco
+  }
+
   public consultarCEP(){
     this.cep = this.formGroup.get('cep')?.value;
     this.web.buscarCep(this.cep).then((res) =>{
@@ -48,14 +59,8 @@ export class EnderecoComponent implements OnInit {
   }
 
   public onChangesFormGroup(): void{
-    const endereco = this.formGroup.value as EnderecoModel;
-    endereco.idAluno = this.aluno.id;
-    endereco.cep = this.formGroup.get('cep')?.value;
-    endereco.logradouro = this.formGroup.get('logradouro')?.value;
-    endereco.numero = this.formGroup.get('numero')?.value;
-    endereco.bairro = this.formGroup.get('bairro')?.value;
-    endereco.cidade = this.formGroup.get('cidade')?.value;
-    this.onChangeValues.emit(endereco)
+    this.endereco = this.publicvalueForm()
+    this.onChangeValues.emit(this.endereco)
   }
 
 }

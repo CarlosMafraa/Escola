@@ -4,6 +4,7 @@ import {AlunosModel} from "../../../Pagina/interface/alunos";
 import {Service} from "../../../Service/service.component";
 import {InformacoesModel} from "../../../Pagina/interface/informacoes";
 
+
 @Component({
   selector: 'informacoes-pessoais',
   templateUrl: './informacoes-pessoais.component.html',
@@ -11,8 +12,8 @@ import {InformacoesModel} from "../../../Pagina/interface/informacoes";
 })
 export class InformacoesPessoaisComponent implements OnInit {
   @Output() onChangeValues: EventEmitter<InformacoesModel> = new EventEmitter<InformacoesModel>();
-  @Input() aluno: AlunosModel;
   public formGroup: FormGroup;
+  public informacoes: InformacoesModel;
   public isChecked: boolean = false;
   public isButton: boolean = true;
 
@@ -28,6 +29,14 @@ export class InformacoesPessoaisComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public publicvalueForm():any{
+    const informacoes = this.formGroup.value as InformacoesModel;
+    informacoes.nomeResponsavel = this.formGroup.get('nomeResponsavel')?.value;
+    informacoes.telefoneResponsavel = this.formGroup.get('telefoneResponsavel')?.value;
+    informacoes.emailResponsavel = this.formGroup.get('emailResponsavel')?.value;
+    return informacoes
   }
 
   public addSegResponsavel(): void{
@@ -52,12 +61,8 @@ export class InformacoesPessoaisComponent implements OnInit {
   }
 
   public onChangesFormGroup(): void{
-    const informacoes = this.formGroup.value as InformacoesModel;
-    informacoes.idAluno = this.aluno.id;
-    informacoes.nomeResponsavel = this.formGroup.get('nomeResponsavel')?.value;
-    informacoes.telefoneResponsavel = this.formGroup.get('telefoneResponsavel')?.value;
-    informacoes.emailResponsavel = this.formGroup.get('emailResponsavel')?.value;
-    this.onChangeValues.emit(informacoes)
+    this.informacoes = this.publicvalueForm();
+    this.onChangeValues.emit(this.informacoes)
   }
 
 }
