@@ -2,7 +2,7 @@ import {EnderecoModel} from "./endereco";
 import {InformacoesModel} from "./informacoes";
 
 export interface AlunosModel{
-  id: string;
+  id?: string;
   nome: string;
   CPF: string;
   nascAluno: string;

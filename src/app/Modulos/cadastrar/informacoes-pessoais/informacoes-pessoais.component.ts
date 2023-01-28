@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlunosModel} from "../../../Pagina/interface/alunos";
 import {Service} from "../../../Service/service.component";
 import {InformacoesModel} from "../../../Pagina/interface/informacoes";
+import {StorageService} from "../../../Service/storage/storage.service";
 
 
 @Component({

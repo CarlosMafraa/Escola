@@ -23,7 +23,6 @@ export class CadastrarComponent implements OnInit {
   constructor(
     private armazem: Service,
     public formBuilder: FormBuilder,
-    private storage : StorageService,
 
   ) {
     this.formGroup = this.formBuilder.group({
@@ -35,20 +34,17 @@ export class CadastrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAluno();
   }
 
   public cadastroAluno(): any  {
     this.cadastrar()
-    if(this.aluno === null){
-      this.cadastrar();
-    }
-  //   this.editarAluno(this.id);
-  //
-  // }
-  //
-  // public cadastrar(): void{
-  //   this.setAluno();
+    // if(this.aluno === null){
+    //   this.cadastrar();
+    //   console.log("Nulo")
+    // } else{
+    //   console.log("Não nulo")
+    //   this.editarAluno(this.aluno.id);
+    // }
   }
 
   public valueForm(): any{
@@ -69,6 +65,7 @@ export class CadastrarComponent implements OnInit {
 
   public cadastrar(): void  {
     this.aluno = this.valueForm();
+    console.log(this.aluno)
     this.loading = true;
     this.armazem.createCadastro(this.aluno).then(()=>{
       this.loading = false;
@@ -97,13 +94,7 @@ export class CadastrarComponent implements OnInit {
     aluno.CPF = this.formGroup.get('CPF')?.value;
     aluno.nome = this.formGroup.get('nome')?.value;
     aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
-    // this.armazem.getEditar()
-  }
 
-  public getAluno(): any{
-    const aluno = this.storage.getData('aluno')
-    this.aluno = aluno;
-    return aluno
   }
 
 }

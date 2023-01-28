@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8 mx-3">
     <div class="p-2">
-      <form [formGroup]="formGroup" (change)="cadastroAluno()">
+      <form [formGroup]="formGroup">
         <p class="title mx-3 mt-2 fs-5 bg-white ">Informações</p>
         <div class="mx-1 my-3 pt-3">
           <div class="m-0 p-0 border rounded row">
@@ -53,8 +53,11 @@
     </div>
 </div>
 
-  <informacoes-pessoais (onChangeValues)="onFormGroup($event)" ></informacoes-pessoais>
-  <endereco (onChangeValues)="onFormGroups($event)"></endereco>
+  <informacoes-pessoais (onChangeValues)="onFormGroup($event)" >
+  </informacoes-pessoais>
+  <endereco (onChangeValues)="onFormGroups($event)">
+
+  </endereco>
   <div class="d-grid gap-2 col-2 mx-auto">
-    <button type="button" class="btn btn-outline-dark" (click)="cadastroAluno()">Cadastrar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cadastrar()">Cadastrar</button>
   </div>

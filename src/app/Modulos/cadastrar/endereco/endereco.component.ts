@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WebServiceService} from "../../../Service/api/web-service.service";
-import {AlunosModel} from "../../../Pagina/interface/alunos";
 import {EnderecoModel} from "../../../Pagina/interface/endereco";
 import {Service} from "../../../Service/service.component";
-import {InformacoesModel} from "../../../Pagina/interface/informacoes";
+
 
 @Component({
   selector: 'endereco',
@@ -60,7 +59,7 @@ export class EnderecoComponent implements OnInit {
 
   public onChangesFormGroup(): void{
     this.endereco = this.publicvalueForm()
-    this.onChangeValues.emit(this.endereco)
+    this.onChangeValues.emit(this.endereco);
   }
 
 }

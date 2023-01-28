@@ -3,6 +3,8 @@ import {Service} from "../../Service/service.component";
 import {AlunosModel} from "../../Pagina/interface/alunos";
 import {Router} from "@angular/router";
 import {StorageService} from "../../Service/storage/storage.service";
+import {InformacoesModel} from "../../Pagina/interface/informacoes";
+import {EnderecoModel} from "../../Pagina/interface/endereco";
 
 @Component({
   selector: 'app-consultar',
@@ -12,8 +14,12 @@ import {StorageService} from "../../Service/storage/storage.service";
 
 export class ConsultarComponent implements OnInit {
   public alunos: AlunosModel[];
+  public informacoes: InformacoesModel[];
+  public endereco: EnderecoModel[];
   public loading: boolean = true;
-
+  public i : number;
+  public dataSource: any;
+  public displayedColumns: Array<string>= ['index','CPF','nome','nascAluno','acoes'];
 
   constructor(
     private armazem: Service,
@@ -43,8 +49,26 @@ export class ConsultarComponent implements OnInit {
   }
 
   public deletarAluno(aluno: AlunosModel): void {
-    this.armazem.deletar(aluno).then();
+
+    console.log(aluno.id)
+    this.armazem.getEndereco(aluno.id).valueChanges().subscribe((res)=>{
+      this.endereco = res;
+      console.log(res)
+      // this.armazem.deleteEndereco(this.endereco[this.i]).then()
+    })
+    this.armazem.getInformacoes(aluno.id).valueChanges().subscribe((res)=>{
+      this.informacoes = res;
+      console.log(res)
+      // this.armazem.deleteInformacoes(this.informacoes[this.i]).then()
+    })
+
+
+    // this.armazem.deleteAluno(aluno).then();
+    // this.armazem.deleteInformacoes(this.informacoes).then();
+
   }
+
+
 
 
 }
