@@ -38,15 +38,14 @@ export class InserirComponent implements OnInit {
 
   }
 
-  // public decidir(materia: string,index: number): void{
-  //   if(this.nota === null){
-  //     console.log()
-  //     this.inserir(materia,index)
-  //   } else {
-  //     this.editar(materia,index)
-  //   }
-  //
-  // }
+  public decidir(materia: string,index: number): void{
+    if(this.nota === null){
+      console.log(this.nota)
+      this.inserir(materia,index)
+    } else {
+      this.editar(materia,index)
+    }
+  }
 
   public getAluno(): any{
     const aluno = this.storage.getData('aluno')
@@ -83,7 +82,6 @@ export class InserirComponent implements OnInit {
       if(Array.isArray(res) && res.length > 0){
         this.loading = false;
         this.nota = res
-        console.log(res)
       }
     });
   }
@@ -94,10 +92,9 @@ export class InserirComponent implements OnInit {
     this.notas.materia = materia ;
     this.notas.idAluno = this.aluno.id;
     this.loading = true;
-    console.log(this.notas)
-    const edit = this.armazem.getEditarNota(this.notas).then(()=>{
-      this.loading = false})
-    console.log(edit)
+    this.armazem.getEditarNota(this.notas).then(()=>{
+      this.loading = false;
+    })
   }
 
 

@@ -53,12 +53,8 @@
     </div>
 </div>
 
-  <informacoes-pessoais
-    (onChangeValues)="onFormGroup($event)"
-  ></informacoes-pessoais>
-  <endereco
-    (onChangeValues)="onFormGroups($event)"
-  ></endereco>
+  <informacoes-pessoais (onChangeValues)="onFormGroup($event)" ></informacoes-pessoais>
+  <endereco (onChangeValues)="onFormGroups($event)"></endereco>
   <div class="d-grid gap-2 col-2 mx-auto">
-    <button type="button" class="btn btn-outline-dark" (click)="cadastrar()">Cadastrar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cadastroAluno()">Cadastrar</button>
   </div>

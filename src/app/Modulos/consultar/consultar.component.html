@@ -26,9 +26,9 @@
       <td class="py-3">{{ aluno.nome}}</td>
       <td class="py-3">{{ aluno.nascAluno | mask: 'd0/M0/0000'}}</td>
       <td>
-        <i type="button" (click)="navigateTo('Cadastrar')" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
+        <i type="button" (click)="editarAluno(aluno)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
         <i type="button" (click)="inserirNotas(aluno)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
-        <i type="button" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
+        <i type="button" (click)="deletarAluno(aluno)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
       </td>
     </tr>
     </tbody>

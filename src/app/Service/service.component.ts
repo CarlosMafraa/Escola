@@ -41,25 +41,20 @@ export class Service{
   }
 
   getAluno(id: string): AngularFirestoreDocument<AlunosModel>{
-    return this.firestore.collection<AlunosModel>('Alunos').doc(id)
+    return this.firestore.collection<AlunosModel>('Alunos').doc(id);
   }
 
   updateAluno(aluno: AlunosModel): Promise<void>{
     return this.firestore.doc<AlunosModel>(aluno.id).update(aluno)
   }
 
-  // deletar(aluno: AlunosModel): Promise<any>{
-  //  const  batch = this.firestore.firestore.batch();
-  //   // const ref = this.getAluno(aluno.id).ref
-  //   const ref = this.firestore.collection<AlunosModel>('Alunos').doc(aluno.id).ref;
-  //
-  //   return ref.get().then();
-  // }
+  deletar(aluno: AlunosModel): Promise<any>{
+   const  batch = this.firestore.firestore.batch();
+    // const ref = this.getAluno(aluno.id).ref
+    const ref = this.firestore.collection<AlunosModel>('Alunos').doc(aluno.id).ref;
+    return ref.delete();
+  }
 
-
-  // getEditar(): Observable<AlunosModel>{
-  //   return this.alunos.asObservable();
-  // }
 
   createIdInformacoes(): string{
     return this.firestore.collection<InformacoesModel>('Informações').doc().ref.id;
@@ -110,7 +105,7 @@ export class Service{
   createNota(nota: NotasModel): Promise<void>{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
-    const ref = this.getNota(nota.idAluno).doc(nota.id).ref
+    const ref = this.getNota(nota.idAluno).doc(nota.materia).ref
     return this.getNota(nota.idAluno).ref.where('numero','==',nota.num_materia).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
@@ -125,23 +120,7 @@ export class Service{
   }
 
   getEditarNota(nota: NotasModel): Promise<void>{
-    console.log("AQui")
-    // this.firestore.collection("Alunos").doc("Notas");
-    // return this.firestore.collection("Alunos").doc("Nota").update({
-    //   "nota1": nota?.nota1,
-    //   "nota2": nota?.nota2,
-    //   "nota3": nota?.nota3,
-    // })
-  //   return this.getNota(nota.idAluno).doc(nota.id).update({
-  //     nota1: nota.nota1,
-  //     nota2: nota.nota2,
-  //     nota3: nota.nota3,
-  //   })
-    return this.firestore.collection('Nota').doc(nota.id).update({
-      nota1: nota.nota1,
-      nota2: nota.nota2,
-      nota3: nota.nota3,
-    })
+    return this.firestore.collection('Alunos').doc(nota.idAluno).collection('Nota').doc(nota.materia).set(nota).then()
 
 
   }

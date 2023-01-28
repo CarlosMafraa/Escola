@@ -32,13 +32,18 @@ export class ConsultarComponent implements OnInit {
 
   }
 
-  public navigateTo(url:string): void {
-    this.router.navigate([url]);
+  public editarAluno(aluno:AlunosModel): void {
+    this.router.navigate(['Cadastrar']);
+    this.storage.setData('aluno',aluno)
   }
 
   public inserirNotas(aluno: AlunosModel): void{
     this.router.navigate(['Consultar/Inserir']);
     this.storage.setData('aluno',aluno)
+  }
+
+  public deletarAluno(aluno: AlunosModel): void {
+    this.armazem.deletar(aluno).then();
   }
 
 

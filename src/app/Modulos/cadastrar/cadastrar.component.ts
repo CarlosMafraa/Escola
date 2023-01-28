@@ -5,6 +5,7 @@ import {AlunosModel} from "../../Pagina/interface/alunos";
 import {EnderecoModel} from "../../Pagina/interface/endereco";
 import {InformacoesModel} from "../../Pagina/interface/informacoes";
 import {ActivatedRoute} from "@angular/router";
+import {StorageService} from "../../Service/storage/storage.service";
 
 @Component({
   selector: 'app-cadastrar',
@@ -22,7 +23,8 @@ export class CadastrarComponent implements OnInit {
   constructor(
     private armazem: Service,
     public formBuilder: FormBuilder,
-    public aRouter: ActivatedRoute,
+    private storage : StorageService,
+
   ) {
     this.formGroup = this.formBuilder.group({
       nome:['',[Validators.required]],
@@ -33,14 +35,12 @@ export class CadastrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAluno();
   }
 
   public cadastroAluno(): any  {
-  //   if(this.formGroup.invalid){
-  //     return;
-  //   }
+    this.cadastrar()
     if(this.aluno === null){
-      return this.aluno;
       this.cadastrar();
     }
   //   this.editarAluno(this.id);
@@ -97,9 +97,13 @@ export class CadastrarComponent implements OnInit {
     aluno.CPF = this.formGroup.get('CPF')?.value;
     aluno.nome = this.formGroup.get('nome')?.value;
     aluno.nascAluno = this.formGroup.get('nascAluno')?.value;
-
     // this.armazem.getEditar()
+  }
 
+  public getAluno(): any{
+    const aluno = this.storage.getData('aluno')
+    this.aluno = aluno;
+    return aluno
   }
 
 }
