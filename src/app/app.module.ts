@@ -22,12 +22,13 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import {InserirComponent} from "./Modulos/inserir/inserir.component";
 import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {FooterComponent} from "./Pagina/footer/footer.component";
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask} from 'ngx-mask'
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HomeComponent} from "./Home/home.component";
 import {HttpClientModule} from "@angular/common/http";
-import {MatTableModule} from '@angular/material/table';
+import {MatTableModule} from "@angular/material/table";
+
 
 @NgModule({
   declarations: [
@@ -47,7 +48,6 @@ import {MatTableModule} from '@angular/material/table';
     BrowserModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatTableModule,
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
@@ -62,9 +62,11 @@ import {MatTableModule} from '@angular/material/table';
     NgxMaskPipe,
     FormsModule,
     HttpClientModule,
+    MatTableModule,
   ],
   providers: [
-    ScreenTrackingService,UserTrackingService,
+    ScreenTrackingService,
+    UserTrackingService,
     {provide: FIREBASE_OPTIONS, useValue: environment.firebase},
     provideNgxMask(),
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
