@@ -5,11 +5,17 @@ import {Router} from "@angular/router";
 import {StorageService} from "../../Service/storage/storage.service";
 import {InformacoesModel} from "../../Pagina/interface/informacoes";
 import {EnderecoModel} from "../../Pagina/interface/endereco";
+import {_DisposeViewRepeaterStrategy, _VIEW_REPEATER_STRATEGY} from "@angular/cdk/collections";
+import {_COALESCED_STYLE_SCHEDULER, _CoalescedStyleScheduler} from "@angular/cdk/table";
 
 @Component({
   selector: 'app-consultar',
   templateUrl: './consultar.component.html',
   styleUrls: ['./consultar.component.css'],
+  providers: [
+    {provide: _VIEW_REPEATER_STRATEGY, useClass: _DisposeViewRepeaterStrategy},
+    {provide: _COALESCED_STYLE_SCHEDULER, useClass: _CoalescedStyleScheduler}
+  ]
 })
 
 export class ConsultarComponent implements OnInit {

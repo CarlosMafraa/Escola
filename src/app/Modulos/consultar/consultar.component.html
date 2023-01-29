@@ -1,45 +1,44 @@
-<!--<div class="mat-elevation-z8 mx-3 my-3">-->
-<!--    <div class="p-2">-->
-<!--        <p class="title mx-3 mt-2 fs-5"><i class="bi bi-box-seam mx-2"></i> Listagem de Alunos</p>-->
-<!--    </div>-->
-
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border text-secondary m-5" role="status" *ngIf="loading">
-      <span class="visually-hidden">Loading...</span>
-    </div>
+<div class="d-flex justify-content-center">
+  <div class="spinner-border text-secondary m-5" role="status" *ngIf="loading">
+    <span class="visually-hidden">Loading...</span>
   </div>
+</div>
 
-  <table mat-table [dataSource]="alunos"  *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno">
+<table mat-table [dataSource]="alunos"  *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno" class="w-100">
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef> # </th>
+    <td mat-cell *matCellDef="let element;let i = index">{{i +1}}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
 
+  <ng-container matColumnDef="CPF">
+    <th mat-header-cell *matHeaderCellDef> CPF </th>
+    <td mat-cell *matCellDef="let element"> {{element.CPF}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="CPF">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
+  <ng-container matColumnDef="nascAluno">
+    <th mat-header-cell *matHeaderCellDef> Data de Nascimento </th>
+    <td mat-cell *matCellDef="let element"> {{element.nascAluno}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="nascAluno">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
+  <ng-container matColumnDef="acoes">
+    <th mat-header-cell *matHeaderCellDef> Ações </th>
+    <td mat-cell *matCellDef="let element">
+      <i type="button" (click)="editarAluno(element.aluno)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
+      <i type="button" (click)="inserirNotas(element.aluno)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
+      <i type="button" (click)="deletarAluno(element.aluno)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
 
-    <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
 
 
@@ -71,9 +70,9 @@
 <!--    </tbody>-->
 <!--  </table>-->
 
-  <ng-template #nadaAluno>
-    <div class="alert alert-warning" role="alert" *ngIf="!loading">
-      Não há nenhum aluno cadastrado!
-    </div>
-  </ng-template>
+<ng-template #nadaAluno>
+  <div class="alert alert-warning" role="alert" *ngIf="!loading">
+    Não há nenhum aluno cadastrado!
+  </div>
+</ng-template>
 <!--</div>-->
