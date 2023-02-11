@@ -63,7 +63,9 @@ export class InformacoesPessoaisComponent implements OnInit {
 
   public onChangesFormGroup(): void{
     this.informacoes = this.publicvalueForm();
-    this.onChangeValues.emit(this.informacoes)
+    if(this.formGroup.valid === true){
+      console.log(this.formGroup)
+    this.onChangeValues.emit(this.informacoes)}
   }
 
 }

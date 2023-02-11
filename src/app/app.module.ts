@@ -28,6 +28,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HomeComponent} from "./Home/home.component";
 import {HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({

@@ -44,34 +44,20 @@ export class ConsultarComponent implements OnInit {
 
   }
 
-  public editarAluno(aluno:AlunosModel): void {
+  public editarAluno(id: string): void {
     this.router.navigate(['Cadastrar']);
-    this.storage.setData('aluno',aluno)
+    this.storage.setData('aluno',id)
   }
 
-  public inserirNotas(aluno: AlunosModel): void{
+  public inserirNotas(id: string): void{
     this.router.navigate(['Consultar/Inserir']);
-    this.storage.setData('aluno',aluno)
+    this.storage.setData('aluno',id)
   }
 
   public deletarAluno(aluno: AlunosModel): void {
-
-    console.log(aluno.id)
-    this.armazem.getEndereco(aluno.id).valueChanges().subscribe((res)=>{
-      this.endereco = res;
-      console.log(res)
-      // this.armazem.deleteEndereco(this.endereco[this.i]).then()
-    })
-    this.armazem.getInformacoes(aluno.id).valueChanges().subscribe((res)=>{
-      this.informacoes = res;
-      console.log(res)
-      // this.armazem.deleteInformacoes(this.informacoes[this.i]).then()
-    })
-
-
-    // this.armazem.deleteAluno(aluno).then();
-    // this.armazem.deleteInformacoes(this.informacoes).then();
-
+    this.armazem.deleteAluno(aluno).then()
+    console.log("Acho que foi!")
+// this.armazem.deleteEndereço(aluno)
   }
 
 

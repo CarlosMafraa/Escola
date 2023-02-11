@@ -6,32 +6,31 @@
 
 <table mat-table [dataSource]="alunos"  *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno" class="w-100">
   <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef> # </th>
-    <td mat-cell *matCellDef="let element;let i = index">{{i +1}}</td>
+    <th mat-header-cell *matHeaderCellDef class="text-center"> # </th>
+    <td mat-cell *matCellDef="let element;let i = index" class="text-center">{{i +1}}</td>
   </ng-container>
 
-
   <ng-container matColumnDef="CPF">
-    <th mat-header-cell *matHeaderCellDef> CPF </th>
-    <td mat-cell *matCellDef="let element"> {{element.CPF}} </td>
+    <th mat-header-cell *matHeaderCellDef class="text-center"> CPF </th>
+    <td mat-cell *matCellDef="let element" class="text-center"> {{element.CPF | mask: '000.000.000-00'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+    <th mat-header-cell *matHeaderCellDef class="text-center"> Nome </th>
+    <td mat-cell *matCellDef="let element" class="text-center"> {{element.nome}} </td>
   </ng-container>
 
   <ng-container matColumnDef="nascAluno">
-    <th mat-header-cell *matHeaderCellDef> Data de Nascimento </th>
-    <td mat-cell *matCellDef="let element"> {{element.nascAluno}} </td>
+    <th mat-header-cell *matHeaderCellDef class="text-center"> Data de Nascimento </th>
+    <td mat-cell *matCellDef="let element" class="text-center"> {{element.nascAluno| mask: '00/00/0000'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="acoes">
     <th mat-header-cell *matHeaderCellDef> Ações </th>
     <td mat-cell *matCellDef="let element">
-      <i type="button" (click)="editarAluno(element.aluno)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
-      <i type="button" (click)="inserirNotas(element.aluno)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
-      <i type="button" (click)="deletarAluno(element.aluno)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
+      <i type="button" (click)="editarAluno(element)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
+      <i type="button" (click)="inserirNotas(element.id)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
+      <i type="button" (click)="deletarAluno(element.id)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
 
     </td>
   </ng-container>

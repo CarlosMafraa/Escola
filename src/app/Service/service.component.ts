@@ -4,7 +4,7 @@ import {AlunosModel} from "../Pagina/interface/alunos";
 import {EnderecoModel} from "../Pagina/interface/endereco";
 import {InformacoesModel} from "../Pagina/interface/informacoes";
 import {NotasModel} from "../Pagina/interface/materias";
-import {doc} from "@angular/fire/firestore";
+import {snapshotEqual} from "@angular/fire/firestore";
 
 
 @Injectable({
@@ -47,12 +47,9 @@ export class Service{
     return this.firestore.doc<AlunosModel>(aluno.id).update(aluno)
   }
 
-  deleteAluno(aluno: AlunosModel): Promise<any>{
-    const collectionRef = this.firestore.collection('Alunos');
+  async deleteAluno(aluno: AlunosModel) {
 
 
-    const ref = this.firestore.collection<AlunosModel>('Alunos').doc(aluno.id).ref.delete();
-    return ref;
   }
 
   getEditAluno(aluno: AlunosModel): Promise<void>{
@@ -85,10 +82,6 @@ export class Service{
     return this.firestore.collection<InformacoesModel>('Alunos').doc(informacoes.idAluno).collection('Informações').doc(informacoes.idAluno).set(informacoes).then();
   }
 
-  deleteInformacoes(informacoes: InformacoesModel): Promise<any>{
-    const ref = this.firestore.collection('Alunos').doc(informacoes.idAluno).collection<InformacoesModel>('Informações').doc(informacoes.idAluno).ref.delete();
-    return ref;
-  }
 
   createIdEndereço(): string{
     return this.firestore.collection<EnderecoModel>('Endereço').doc().ref.id;
@@ -97,7 +90,7 @@ export class Service{
   createEndereço(endereco: EnderecoModel): Promise<void>{
     endereco.id = this.createIdEndereço();
     const batch = this.firestore.firestore.batch();
-    const ref = this.getEndereco(endereco.idAluno).doc(endereco.idAluno).ref
+    const ref = this.getEndereco(endereco.idAluno).doc(endereco.id).ref
     return this.getEndereco(endereco.idAluno).ref.where('cep','==',endereco.cep).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();
@@ -115,20 +108,18 @@ export class Service{
     return this.firestore.collection('Alunos').doc(endereco.idAluno).collection<EnderecoModel>('Endereço').doc(endereco.idAluno).set(endereco).then();
   }
 
-  deleteEndereco(endereco: EnderecoModel): Promise<any>{
-    // const ref = this.firestore.firestore.batch();
-    // const reref = this.getAluno(endereco.idAluno).ref;
-    // const endRef = this.getEndereco(endereco.idAluno).ref;
-    // return endRef.get().then((res)=>{
-    //   res.forEach(async end =>{
-    //     await endRef.doc(end.data().id).delete();
-    //   });
-    //   ref.delete(reref);
-    //   return ref.commit();
-    // })
-    return  this.firestore.collection('Alunos').doc(endereco.idAluno).collection<EnderecoModel>('Endereço').doc(endereco.idAluno).ref.delete();
+  deleteEndereço(endereco: EnderecoModel): Promise<void>{
+    return  this.firestore.collection('Endereço').doc(endereco.id).delete()
 
+
+
+    // ref.get().subscribe(docs =>{
+    //   docs.forEach( async doc =>{
+    //     await ref.doc(doc.data().id).delete()
+    //   })
+    // })
   }
+
 
   createIdNota(): string{
     return this.firestore.collection('Nota').doc().ref.id;
@@ -137,7 +128,7 @@ export class Service{
   createNota(nota: NotasModel): Promise<void>{
     nota.id = this.createIdNota();
     const batch = this.firestore.firestore.batch();
-    const ref = this.getNota(nota.idAluno).doc(nota.materia).ref
+    const ref = this.getNota(nota.idAluno).doc(nota.id).ref
     return this.getNota(nota.idAluno).ref.where('numero','==',nota.num_materia).get().then((Doc)=>{
       if(!Doc.empty){
         throw new Error();

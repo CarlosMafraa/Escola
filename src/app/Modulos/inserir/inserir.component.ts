@@ -34,8 +34,6 @@ export class InserirComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAluno();
-    this.consultar();
-
   }
 
   public decidir(materia: string,index: number): void{
@@ -48,9 +46,18 @@ export class InserirComponent implements OnInit {
   }
 
   public getAluno(): any{
-    const aluno = this.storage.getData('aluno')
-    this.aluno = aluno;
-    return aluno
+    const id = this.storage.getData('aluno');
+    this.armazem.getNota(id).valueChanges().subscribe((res)=>{
+      if(Array.isArray(res) && res.length > 0){
+        this.loading = false;
+        this.nota = res
+      }
+    });
+    this.armazem.getAluno(id).valueChanges().subscribe((res)=>{
+      console.log(res)
+      this.aluno = res;
+    })
+    return this.aluno;
   }
 
   public publicvalueForm():any{
@@ -75,15 +82,6 @@ export class InserirComponent implements OnInit {
       this.loading = false;
     })
     console.log(this.notas)
-  }
-
-  public consultar(): void{
-    this.armazem.getNota(this.aluno.id).valueChanges().subscribe((res)=>{
-      if(Array.isArray(res) && res.length > 0){
-        this.loading = false;
-        this.nota = res
-      }
-    });
   }
 
   public editar(materia: string,index: number): void{

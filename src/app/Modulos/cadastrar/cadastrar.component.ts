@@ -14,6 +14,8 @@ import {StorageService} from "../../Service/storage/storage.service";
 })
 export class CadastrarComponent implements OnInit {
   public formGroup: FormGroup;
+  public formOne: FormGroup;
+  public formTwo: FormGroup;
   public loading : boolean = false;
   public cadastro : boolean = false;
   public aluno: AlunosModel;

@@ -62,4 +62,5 @@ export class EnderecoComponent implements OnInit {
     this.onChangeValues.emit(this.endereco);
   }
 
+
 }
