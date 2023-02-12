@@ -1,5 +1,6 @@
 import {EnderecoModel} from "./endereco";
 import {InformacoesModel} from "./informacoes";
+import {NotasModel} from "./materias";
 
 export interface AlunosModel{
   id?: string;
@@ -11,6 +12,7 @@ export interface AlunosModel{
   emailResponsavel?: string;
   endereco?:EnderecoModel;
   informacoes?: InformacoesModel;
+  nota?: NotasModel;
 
 }
 

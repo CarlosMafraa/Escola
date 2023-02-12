@@ -1,71 +1,249 @@
-<div class="mat-elevation-z8 mx-3">
-  <div class="p-2">
-    <form [formGroup]="formGroup">
-      <p class="title mx-3 mt-2 fs-5 bg-white ">Informações</p>
-      <div class="mx-1 my-3 pt-3">
-        <div class="m-0 p-0 border rounded row">
-          <p class="title ms-3 px-2 fs-5 bg-white text-success">Aluno</p>
-          <div class="row g-3 p-0 m-0">
-            <div class="col-12 col-sm-6 col-lg-6 m-0 mb-3">
-              <div class="form-floating">
-                <input type="text"
-                       class="form-control"
-                       min="1"
-                       max="30"
-                       id="nomeInput"
-                       formControlName="nome"
-                       required />
-                <!--                       [ngClass]="{-->
-                <!--                       'is-valid': formGroup.get('nome')?.valid,-->
-                <!--                       'is-invalid': formGroup.get('nome')?.invalid}"-->
-                <label for="nomeInput">Nome</label>
-              </div>
-            </div>
-            <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
-              <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  min="1"
-                  max="30"
-                  id="cpfInput"
-                  formControlName="CPF"
-                  mask = "000.000.000-00" required/>
-                <!--                  [ngClass]="{-->
-                <!--                       'is-valid': formGroup.get('CPF')?.valid,-->
-                <!--                       'is-invalid': formGroup.get('CPF')?.invalid}"-->
-                <label for="cpfInput">CPF</label>
-              </div>
-            </div>
-            <div class="col-6 col-sm-3 col-lg-3 m-0 mb-3">
-              <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  min="1"
-                  max="30"
-                  id="nascimentoInput"
-                  formControlName="nascAluno"
-                  mask="00/00/0000" required />
-                <!--                  [ngClass]="{-->
-                <!--                       'is-valid': formGroup.get('nascAluno')?.valid,-->
-                <!--                       'is-invalid': formGroup.get('nascAluno')?.invalid}"-->
-                <label for="nascimentoInput">Data de Nascimento</label>
-              </div>
-            </div>
+<div class="my-3">
+  <form [formGroup]="formGroup" (submit)="cadastrar()">
+    <p class="mx-3 fs-4">Informações</p>
+    <div class="border rounded m-3">
+      <p class="mx-3 my-2">Aluno</p>
+      <div class="col-12 col-sm-12 col-lg-12 p-2">
+        <div class="form-floating">
+          <input type="text"
+                 class="form-control"
+                 min="1"
+                 max="30"
+                 id="nomeInput"
+                 formControlName="nome"
+                 required />
+          <label for="nomeInput">Nome</label>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="cpfInput"
+              formControlName="CPF"
+              mask = "000.000.000-00" required/>
+            <label for="cpfInput">CPF</label>
+          </div>
+        </div>
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="nascimentoInput"
+              formControlName="nascAluno"
+              mask="00/00/0000" required />
+
+            <label for="nascimentoInput">Data de Nascimento</label>
           </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="border rounded m-3">
+      <p class="mx-3 my-2">Responsável</p>
+      <div class="col-12 col-sm-12 col-lg-12 p-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            min="1"
+            max="30"
+            id="nomeResponsavelInput"
+            formControlName="nomeResponsavel"
+            required />
+          <label for="nomeResponsavelInput">Nome</label>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-6 p-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            min="1"
+            max="30"
+            id="telefoneInput"
+            formControlName="telefoneResponsavel"
+            mask ="(00) 0 0000-0000"
+            required />
+          <label for="telefoneInput">Telefone</label>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-lg-12 p-2">
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            min="1"
+            max="30"
+            id="emailInput"
+            formControlName="emailResponsavel"
+            required
+          />
+          <label for="emailInput">E-mail</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid col-4 mx-auto my-2" *ngIf="isButton">
+      <button type="button" class="btn btn-sm btn-outline-primary "
+              title="Adicionar Responsável"
+              (click)="addSegResponsavel()"><i class="bi bi-plus-circle"></i> Adicionar
+      </button>
+    </div>
+
+
+    <div *ngIf="isChecked">
+      <div class="border rounded m-3">
+        <p class="mx-3 my-2">Responsável <em>(Alternativo)</em></p>
+        <div class="col-12 col-sm-12 col-lg-12 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="nome2"
+              formControlName="nomeSegResponsavel"
+              required />
+            <label for="nome2">Nome</label>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="telefone2"
+              formControlName="telefoneSegResponsavel"
+              required />
+            <label for="telefone2">Telefone</label>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-12 p-2">
+          <div class="form-floating">
+            <input
+              type="email"
+              class="form-control"
+              min="1"
+              max="30"
+              id="email2"
+              formControlName="emailResponsavel"
+              required
+            />
+            <label for="email2">E-mail</label>
+          </div>
+        </div>
+      </div>
+      <div class="d-grid col-4 mx-auto">
+        <button type="button" class="btn btn-sm btn-outline-danger "
+                title="Adicionar Responsável"
+                (click)="removeSegResponsavel()"><i class="bi bi-x-circle"></i> Remover
+        </button>
+      </div>
+    </div>
+
+
+    <div class="border rounded m-3">
+      <p class="mx-3 my-2">Endereço</p>
+      <div class="d-flex flex-row">
+          <div class="col-5 col-sm-5 col-lg-5 p-2">
+            <div class="form-floating">
+              <input type="text"
+                     class="form-control"
+                     min="1"
+                     max="8"
+                     id="cepInput"
+                     mask="00000-000"
+                     formControlName="cep"
+                     autocomplete="off"
+                     required />
+              <label for="cepInput">CEP</label>
+            </div>
+          </div>
+          <div class="col-1 col-sm-1 col-lg-1 p-2">
+            <button type="button" class="btn btn-outline-secondary mt-2" (click)="consultarCEP()">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="numero"
+              formControlName="numero"
+              required />
+            <label for="numero">Número</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-lg-12 p-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            min="1"
+            max="30"
+            id="avenida"
+            formControlName="logradouro"
+            [ngModel]="this.logradouro"
+            required />
+          <label for="avenida">Avenida/Rua</label>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="bairro"
+              formControlName="bairro"
+              [ngModel]="this.bairro"
+              required />
+            <label for="bairro">Bairro</label>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              min="1"
+              max="30"
+              id="cidade"
+              formControlName="cidade"
+              [ngModel]="this.cidade"
+              required
+            />
+            <label for="cidade">Cidade</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid col-2 mx-auto mb-5">
+      <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+    </div>
+
+  </form>
 </div>
 
-<informacoes-pessoais
-  (onChangeValues)="onFormGroup($event)" >
-</informacoes-pessoais>
-<endereco
-  (onChangeValues)="onFormGroups($event)">
-</endereco>
-<div class="d-grid col-2 mx-auto mb-5">
-  <button type="button" class="btn btn-outline-dark" (click)="cadastrar()">Cadastrar</button>
-</div>
+
+

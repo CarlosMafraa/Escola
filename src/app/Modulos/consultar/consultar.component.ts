@@ -55,9 +55,9 @@ export class ConsultarComponent implements OnInit {
   }
 
   public deletarAluno(aluno: AlunosModel): void {
+    console.log(aluno)
     this.armazem.deleteAluno(aluno).then()
-    console.log("Acho que foi!")
-// this.armazem.deleteEndereço(aluno)
+
   }
 
 

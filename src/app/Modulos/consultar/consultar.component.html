@@ -1,77 +1,53 @@
-<div class="d-flex justify-content-center">
-  <div class="spinner-border text-secondary m-5" role="status" *ngIf="loading">
-    <span class="visually-hidden">Loading...</span>
+<div class="py-2 px-3">
+  <div class="border p-2">
+    <div class="bg-primary rounded">
+      <p class="mx-3 py-2 text-white">Lista de Alunos</p>
+    </div>
+    <div class="progress" *ngIf="loading; else listAlunos">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+    <ng-template #listAlunos>
+      <table mat-table [dataSource]="alunos"  *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno" class="w-100">
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> # </th>
+          <td mat-cell *matCellDef="let element;let i = index" class="text-center">{{i +1}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="CPF">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> CPF </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.CPF | mask: '000.000.000-00'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Nome </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.nome}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nascAluno">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Data de Nascimento </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.nascAluno| mask: '00/00/0000'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let element">
+            <i type="button" (click)="editarAluno(element)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
+            <i type="button" (click)="inserirNotas(element.id)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
+            <i type="button" (click)="deletarAluno(element)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+      <ng-template #nadaAluno>
+        <div class="alert alert-warning" role="alert" *ngIf="!loading">
+          Não há nenhum aluno cadastrado!
+        </div>
+      </ng-template>
+    </ng-template>
   </div>
 </div>
-
-<table mat-table [dataSource]="alunos"  *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno" class="w-100">
-  <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> # </th>
-    <td mat-cell *matCellDef="let element;let i = index" class="text-center">{{i +1}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="CPF">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> CPF </th>
-    <td mat-cell *matCellDef="let element" class="text-center"> {{element.CPF | mask: '000.000.000-00'}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> Nome </th>
-    <td mat-cell *matCellDef="let element" class="text-center"> {{element.nome}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="nascAluno">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> Data de Nascimento </th>
-    <td mat-cell *matCellDef="let element" class="text-center"> {{element.nascAluno| mask: '00/00/0000'}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="acoes">
-    <th mat-header-cell *matHeaderCellDef> Ações </th>
-    <td mat-cell *matCellDef="let element">
-      <i type="button" (click)="editarAluno(element)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>
-      <i type="button" (click)="inserirNotas(element.id)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>
-      <i type="button" (click)="deletarAluno(element.id)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>
-
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-
-
-
-
-
-<!--  <table class="table text-center" *ngIf="alunos !== undefined && alunos.length > 0; else nadaAluno">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th scope="col" class="py-3">#</th>-->
-<!--      <th scope="col" class="py-3">CPF</th>-->
-<!--      <th scope="col" class="py-3">Nome</th>-->
-<!--      <th scope="col" class="py-3">Data de Nascimento</th>-->
-<!--      <th scope="col" class="py-3">Ação</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr *ngFor="let aluno of alunos; let i = index">-->
-<!--      <td class="py-3">{{i+1}}</td>-->
-<!--      <td class="py-3" >{{aluno.CPF | mask: '000.000.000-00'}}</td>-->
-<!--      <td class="py-3">{{ aluno.nome}}</td>-->
-<!--      <td class="py-3">{{ aluno.nascAluno | mask: 'd0/M0/0000'}}</td>-->
-<!--      <td>-->
-<!--        <i type="button" (click)="editarAluno(aluno)" class="text-primary bi bi-pencil-square mx-1" title="Editar"></i>-->
-<!--        <i type="button" (click)="inserirNotas(aluno)" class="text-success bi bi-layout-text-sidebar-reverse mx-1" title="Notas"></i>-->
-<!--        <i type="button" (click)="deletarAluno(aluno)" class="text-danger bi bi-trash3 mx-1" title="Excluir"></i>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-
-<ng-template #nadaAluno>
-  <div class="alert alert-warning" role="alert" *ngIf="!loading">
-    Não há nenhum aluno cadastrado!
-  </div>
-</ng-template>
-<!--</div>-->

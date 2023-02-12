@@ -47,8 +47,34 @@ export class Service{
     return this.firestore.doc<AlunosModel>(aluno.id).update(aluno)
   }
 
-  async deleteAluno(aluno: AlunosModel) {
+  deleteAluno(aluno: AlunosModel): Promise<void>{
+    console.log(aluno)
+    const batch = this.firestore.firestore.batch();
+    const adeus = this.getAluno(aluno.id).ref;
+    const infoRef = this.getInformacoes(aluno.id).ref
+    const endRef = this.getEndereco(aluno.id).ref;
+    const notasRef = this.getNota(aluno.id).ref;
 
+    infoRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(async doc =>{
+        await infoRef.doc(doc.data().idAluno).delete()
+      })
+    })
+
+    endRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(async doc =>{
+        await endRef.doc(doc.data().idAluno).delete()
+      })
+
+    })
+
+    notasRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(async doc =>{
+        await notasRef.doc(doc.data().idAluno).delete()
+      })
+    })
+    batch.delete(adeus);
+    return batch.commit();
 
   }
 
@@ -82,7 +108,6 @@ export class Service{
     return this.firestore.collection<InformacoesModel>('Alunos').doc(informacoes.idAluno).collection('Informações').doc(informacoes.idAluno).set(informacoes).then();
   }
 
-
   createIdEndereço(): string{
     return this.firestore.collection<EnderecoModel>('Endereço').doc().ref.id;
   }
@@ -107,19 +132,6 @@ export class Service{
   getEditEndereco(endereco: EnderecoModel): Promise<void>{
     return this.firestore.collection('Alunos').doc(endereco.idAluno).collection<EnderecoModel>('Endereço').doc(endereco.idAluno).set(endereco).then();
   }
-
-  deleteEndereço(endereco: EnderecoModel): Promise<void>{
-    return  this.firestore.collection('Endereço').doc(endereco.id).delete()
-
-
-
-    // ref.get().subscribe(docs =>{
-    //   docs.forEach( async doc =>{
-    //     await ref.doc(doc.data().id).delete()
-    //   })
-    // })
-  }
-
 
   createIdNota(): string{
     return this.firestore.collection('Nota').doc().ref.id;

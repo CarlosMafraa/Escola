@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HeaderComponent} from "./Pagina/header/header.component";
 import {CadastrarComponent} from "./Modulos/cadastrar/cadastrar.component";
-import {InformacoesPessoaisComponent} from "./Modulos/cadastrar/informacoes-pessoais/informacoes-pessoais.component";
-import {EnderecoComponent} from "./Modulos/cadastrar/endereco/endereco.component";
 import {MenuComponent} from "./Menu/menu.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -28,8 +26,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HomeComponent} from "./Home/home.component";
 import {HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -37,8 +33,6 @@ import {MatInputModule} from "@angular/material/input";
     AppComponent,
     HeaderComponent,
     CadastrarComponent,
-    InformacoesPessoaisComponent,
-    EnderecoComponent,
     InserirComponent,
     ConsultarComponent,
     MenuComponent,
