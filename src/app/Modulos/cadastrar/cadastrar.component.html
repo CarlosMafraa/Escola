@@ -1,6 +1,7 @@
 <div class="my-3">
-  <form [formGroup]="formGroup" (submit)="cadastrar()">
-    <p class="mx-3 fs-4">Informações</p>
+
+  <p class="mx-3 fs-4">Informações</p>
+  <form [formGroup]="formGroupAluno">
     <div class="border rounded m-3">
       <p class="mx-3 my-2">Aluno</p>
       <div class="col-12 col-sm-12 col-lg-12 p-2">
@@ -45,6 +46,8 @@
         </div>
       </div>
     </div>
+  </form>
+  <form [formGroup]="formGroupResponsavel">
     <div class="border rounded m-3">
       <p class="mx-3 my-2">Responsável</p>
       <div class="col-12 col-sm-12 col-lg-12 p-2">
@@ -150,30 +153,30 @@
         </button>
       </div>
     </div>
-
-
+  </form>
+  <form [formGroup]="formGroupEndereco">
     <div class="border rounded m-3">
       <p class="mx-3 my-2">Endereço</p>
       <div class="d-flex flex-row">
-          <div class="col-5 col-sm-5 col-lg-5 p-2">
-            <div class="form-floating">
-              <input type="text"
-                     class="form-control"
-                     min="1"
-                     max="8"
-                     id="cepInput"
-                     mask="00000-000"
-                     formControlName="cep"
-                     autocomplete="off"
-                     required />
-              <label for="cepInput">CEP</label>
-            </div>
+        <div class="col-5 col-sm-5 col-lg-5 p-2">
+          <div class="form-floating">
+            <input type="text"
+                   class="form-control"
+                   min="1"
+                   max="8"
+                   id="cepInput"
+                   mask="00000-000"
+                   formControlName="cep"
+                   autocomplete="off"
+                   required />
+            <label for="cepInput">CEP</label>
           </div>
-          <div class="col-1 col-sm-1 col-lg-1 p-2">
-            <button type="button" class="btn btn-outline-secondary mt-2" (click)="consultarCEP()">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
+        </div>
+        <div class="col-1 col-sm-1 col-lg-1 p-2">
+          <button type="button" class="btn btn-outline-secondary mt-2" (click)="consultarCEP()">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
 
         <div class="col-6 col-sm-6 col-lg-6 p-2">
           <div class="form-floating">
@@ -239,7 +242,7 @@
     </div>
 
     <div class="d-grid col-2 mx-auto mb-5">
-      <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+      <button type="submit" class="btn btn-outline-dark" (click)="cadastroAluno()">Cadastrar</button>
     </div>
 
   </form>
