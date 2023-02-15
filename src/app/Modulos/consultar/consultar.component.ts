@@ -37,6 +37,8 @@ export class ConsultarComponent implements OnInit {
     this.listarAlunos();
   }
 
+
+
   public listarAlunos(): void{
     this.armazem.getAllAlunos().valueChanges().subscribe((res)=>{
       this.loading = false;
@@ -45,7 +47,7 @@ export class ConsultarComponent implements OnInit {
   }
 
   public editarAluno(id: string): void {
-    this.router.navigate(['Cadastrar']);
+    this.router.navigate(['Consultar/Editar']);
     this.storage.setData('aluno',id)
   }
 

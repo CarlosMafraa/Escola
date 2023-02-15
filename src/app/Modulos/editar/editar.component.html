@@ -12,6 +12,7 @@
                  max="30"
                  id="nomeInput"
                  formControlName="nome"
+                 [ngModel]="this.aluno?.nome"
                  required />
           <label for="nomeInput">Nome</label>
         </div>
@@ -26,7 +27,9 @@
               max="30"
               id="cpfInput"
               formControlName="CPF"
-              mask = "000.000.000-00" required/>
+              mask = "000.000.000-00"
+              [ngModel]="this.aluno?.CPF"
+              required/>
             <label for="cpfInput">CPF</label>
           </div>
         </div>
@@ -39,7 +42,9 @@
               max="30"
               id="nascimentoInput"
               formControlName="nascAluno"
-              mask="00/00/0000" required />
+              mask="00/00/0000"
+              [ngModel]="this.aluno?.nascAluno"
+              required />
 
             <label for="nascimentoInput">Data de Nascimento</label>
           </div>
@@ -59,6 +64,7 @@
             max="30"
             id="nomeResponsavelInput"
             formControlName="nomeResponsavel"
+            [ngModel]="this.informacao?.nomeResponsavel"
             required />
           <label for="nomeResponsavelInput">Nome</label>
         </div>
@@ -73,6 +79,7 @@
             id="telefoneInput"
             formControlName="telefoneResponsavel"
             mask ="(00) 0 0000-0000"
+            [ngModel]="this.informacao?.telefoneResponsavel"
             required />
           <label for="telefoneInput">Telefone</label>
         </div>
@@ -87,6 +94,7 @@
             max="30"
             id="emailInput"
             formControlName="emailResponsavel"
+            [ngModel]="this.informacao?.emailResponsavel"
             required
           />
           <label for="emailInput">E-mail</label>
@@ -158,7 +166,7 @@
     <div class="border rounded m-3">
       <p class="mx-3 my-2">Endereço</p>
       <div class="d-flex flex-row">
-        <div class="col-5 col-sm-5 col-lg-5 p-2">
+        <div class="col-6 col-sm-6 col-lg-6 p-2">
           <div class="form-floating">
             <input type="text"
                    class="form-control"
@@ -168,14 +176,10 @@
                    mask="00000-000"
                    formControlName="cep"
                    autocomplete="off"
+                   [ngModel]="this.endereco?.cep"
                    required />
             <label for="cepInput">CEP</label>
           </div>
-        </div>
-        <div class="col-1 col-sm-1 col-lg-1 p-2">
-          <button type="button" class="btn btn-outline-secondary mt-2" (click)="consultarCEP()">
-            <i class="bi bi-search"></i>
-          </button>
         </div>
 
         <div class="col-6 col-sm-6 col-lg-6 p-2">
@@ -187,6 +191,7 @@
               max="30"
               id="numero"
               formControlName="numero"
+              [ngModel]="this.endereco?.numero"
               required />
             <label for="numero">Número</label>
           </div>
@@ -202,7 +207,7 @@
             max="30"
             id="avenida"
             formControlName="logradouro"
-            [ngModel]="this.logradouro"
+            [ngModel]="this.endereco?.logradouro"
             required />
           <label for="avenida">Avenida/Rua</label>
         </div>
@@ -217,7 +222,7 @@
               max="30"
               id="bairro"
               formControlName="bairro"
-              [ngModel]="this.bairro"
+              [ngModel]="this.endereco?.bairro"
               required />
             <label for="bairro">Bairro</label>
           </div>
@@ -232,7 +237,7 @@
               max="30"
               id="cidade"
               formControlName="cidade"
-              [ngModel]="this.cidade"
+              [ngModel]="this.endereco?.cidade"
               required
             />
             <label for="cidade">Cidade</label>
@@ -242,7 +247,7 @@
     </div>
 
     <div class="d-grid col-2 mx-auto mb-5">
-      <button type="submit" class="btn btn-outline-dark" (click)="cadastrar()">Cadastrar</button>
+      <button type="submit" class="btn btn-outline-dark" (click)="cadastroAluno()">Cadastrar</button>
     </div>
 
   </form>

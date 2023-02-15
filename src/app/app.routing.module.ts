@@ -5,6 +5,7 @@ import {DesempenhoComponent} from "./Modulos/desempenho/desempenho.component";
 import {ConsultarComponent} from "./Modulos/consultar/consultar.component";
 import {InserirComponent} from "./Modulos/inserir/inserir.component";
 import {HomeComponent} from "./Home/home.component";
+import {EditarComponent} from "./Modulos/editar/editar.component";
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
             path: 'Inserir',
             title: 'Inserir',
             component: InserirComponent,
+          },{
+            path: 'Editar',
+            title: 'Editar',
+            component: EditarComponent,
           }
         ]
       },

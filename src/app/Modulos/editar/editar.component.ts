@@ -1,19 +1,18 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Service} from "../../Service/service.component";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AlunosModel} from "../../Pagina/interface/alunos";
+import {StorageService} from "../../Service/storage/storage.service";
+import {Service} from "../../Service/service.component";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EnderecoModel} from "../../Pagina/interface/endereco";
 import {InformacoesModel} from "../../Pagina/interface/informacoes";
-import {StorageService} from "../../Service/storage/storage.service";
-import {WebServiceService} from "../../Service/api/web-service.service";
 
 @Component({
-  selector: 'app-cadastrar',
-  templateUrl: './cadastrar.component.html',
-  styleUrls: ['./cadastrar.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-editar',
+  templateUrl: './editar.component.html',
+  styleUrls: ['./editar.component.css']
 })
-export class CadastrarComponent implements OnInit {
+export class EditarComponent implements OnInit, OnDestroy {
+  public pass: AlunosModel;
   public formGroupAluno: FormGroup;
   public formGroupResponsavel: FormGroup;
   public formGroupEndereco: FormGroup;
@@ -30,17 +29,22 @@ export class CadastrarComponent implements OnInit {
   public cidade: string = '';
   public bairro: string = '';
 
-  constructor(
-    private armazem: Service,
-    public formBuilder: FormBuilder,
 
-    private web: WebServiceService,
-  ) {
+  constructor(
+    public storage: StorageService,
+    public armazem: Service,
+    public formBuilder: FormBuilder){
+
   }
 
   ngOnInit(): void {
+    this.pass = this.storage.getData('aluno');
+    this.listAluno(this.pass.id);
     this.form();
+  }
 
+  ngOnDestroy(): void {
+    this.storage.setData('aluno',null)
   }
 
   public form(): void{
@@ -61,13 +65,8 @@ export class CadastrarComponent implements OnInit {
     })
   }
 
-  public consultarCEP(){
-    this.cep = this.formGroupEndereco.get('cep')?.value;
-    this.web.buscarCep(this.cep).then((res) =>{
-      this.bairro = res.data.bairro;
-      this.logradouro = res.data.logradouro;
-      this.cidade = res.data.localidade;
-    })
+  public cadastroAluno(): void {
+
   }
 
   public valueFormAluno(): any{
@@ -96,6 +95,7 @@ export class CadastrarComponent implements OnInit {
     return endereco;
   }
 
+
   public addSegResponsavel(): void{
     this.isChecked = true;
     this.isButton = false;
@@ -118,30 +118,50 @@ export class CadastrarComponent implements OnInit {
   }
 
 
-  public cadastrar(): void  {
-    this.aluno = this.valueFormAluno();
-    this.loading = true;
-    this.armazem.createCadastro(this.aluno).then(()=>{
-      this.loading = false;
-      this.formGroupAluno?.reset();
-    },error =>{
-      this.loading = false;
+  public editarAluno(id: string): void{
+    //   this.aluno = this.valueFormAluno();
+    //   this.loading = true;
+    //   this.armazem.createCadastro(this.aluno).then(()=>{
+    //     this.loading = false;
+    //     this.formGroupAluno?.reset();
+    //   },error =>{
+    //     this.loading = false;
+    //   })
+    //   this. informacao = this.valueFormInformacoes();
+    //   this.informacao.idAluno = this.aluno.id;
+    //   this.armazem.createInformacoes(this.informacao).then(()=>{
+    //     this.loading = false;
+    //     this.formGroupResponsavel?.reset();
+    //   },error =>{
+    //     this.loading = false;
+    //   })
+    //   this.endereco = this.valueFormEndereco();
+    //   this.endereco.idAluno = this.aluno.id;
+    //   this.armazem.createEndereço(this.endereco).then(()=>{
+    //     this.loading = false;
+    //     this.formGroupEndereco?.reset();
+    //   },error =>{
+    //     this.loading = false;
+    //   })
+  }
+
+  public listAluno(id: string): void{
+    this.armazem.getAluno(id).valueChanges().subscribe((res) =>{
+      this.aluno = res;
     })
-    this. informacao = this.valueFormInformacoes();
-    this.informacao.idAluno = this.aluno.id;
-    this.armazem.createInformacoes(this.informacao).then(()=>{
-      this.loading = false;
-      this.formGroupResponsavel?.reset();
-    },error =>{
-      this.loading = false;
+    this.armazem.getInformacoes(id).valueChanges().subscribe((res) =>{
+      if(res.length > 0){
+        res.forEach(doc =>{
+          this.informacao = doc;
+        })
+      }
     })
-    this.endereco = this.valueFormEndereco();
-    this.endereco.idAluno = this.aluno.id;
-    this.armazem.createEndereço(this.endereco).then(()=>{
-      this.loading = false;
-      this.formGroupEndereco?.reset();
-    },error =>{
-      this.loading = false;
+    this.armazem.getEndereco(id).valueChanges().subscribe((res) =>{
+      if(res.length > 0){
+        res.forEach(doc =>{
+          this.endereco = doc;
+        })
+      }
     })
   }
 

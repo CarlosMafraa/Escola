@@ -26,6 +26,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HomeComponent} from "./Home/home.component";
 import {HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
+import {EditarComponent} from "./Modulos/editar/editar.component";
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatTableModule} from "@angular/material/table";
     ConsultarComponent,
     MenuComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    EditarComponent
   ],
   imports: [
     FormsModule,
